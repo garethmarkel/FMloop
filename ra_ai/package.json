@@ -19,6 +19,7 @@
     "concurrently": "^3.5.1",
     "express": "^4.16.2",
     "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
     "sequelize": "^5.21.5"
   }
 }
