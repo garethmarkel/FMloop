@@ -37,6 +37,10 @@ var Project = sequelize.define("project", {
       onUpdate: 'restrict',
       onDelete: 'restrict'
   }, {
+    freezeTableName: true,
+    tableName: 'project',
+    updatedAt: false,
+    createdAt: 'created',
     setterMethods: {
       setTitle: function(title){
         this.setDataValue("title", title);

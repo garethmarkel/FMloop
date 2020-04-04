@@ -34,6 +34,10 @@ var Contract = sequelize.define('contract', {
     defaultValue: null
   }
 }, {
+  freezeTableName: true,
+  tableName: 'contract',
+  updatedAt: false,
+  createdAt: false,
   setterMethods: {
     setCompleted: function(){
       this.setDataValue('completion_date', Sequelize.NOW);

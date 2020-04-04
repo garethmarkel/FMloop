@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Customers from './components/customers';
-
+import Login from './pages/login';
 function App() {
   return (
     <div className="App">
@@ -21,6 +21,18 @@ function App() {
         </a>
       </header>
       <Customers />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Login />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 }
