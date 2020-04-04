@@ -5,7 +5,7 @@ exports.authenticate = function(req, res, next)
 {
   // console.log(req);
 
-  var authenticated = false;
+  var auth = false;
   var email = req.params.email.replace('..','.');
   var password = req.params.passphrase;
 
@@ -21,12 +21,11 @@ exports.authenticate = function(req, res, next)
 
       if (foundPassphrase == password)
       {
-        console.log("Check yo self");
-        authenticated = true;
+        auth = true;
       }
     }
 
-    res.send(authenticated);
+    res.json({authenticated: auth});
   }).catch(err => {
     console.log(err);
   });

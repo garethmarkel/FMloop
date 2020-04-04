@@ -7,7 +7,8 @@ class Login extends React.Component {
       error: null,
       correct: false,
       email:'',
-      passphrase:''
+      passphrase:'',
+      result: ''
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -26,18 +27,18 @@ class Login extends React.Component {
   handleSubmit(event) {
     //console.log(JSON.stringify({name: this.state.value}));
     console.log("hi");
-    fetch("/people/authenticate", {
-      method: 'POST',
-      body: JSON.stringify({
-        passphrase: this.state.passphrase,
-        email: this.state.email
-      })
-    }).then(
+    fetch(
+      "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
+    ).then(result => result.json()).then(
       (result) => {
-        //console.log('AAA');
-        console.log(result.authenticated);
+
+        var reslt ='Wrong password, motherfucker'
+        if(result.authenticated == true) {
+          reslt = 'Correct password, simp'
+        }
         this.setState({
           correct: result.authenticated,
+          result: reslt
         });
       },
       // Note: it's important to handle errors here
@@ -64,14 +65,18 @@ class Login extends React.Component {
     } else {
       return (
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <label>Email</label>
-            <input type="text" name="email" onChange={this.handleEmailChange} />
-            <label>Password</label>
-            <input type="passphrase" name="password" onChange={this.handlePassphraseChange} />
-            <input type='submit' value='Submit' />
-          </form>
-        </div>
+          <div>
+            <form onSubmit={this.handleSubmit}>
+              <label>Email</label>
+              <input type="text" name="email" onChange={this.handleEmailChange} />
+              <label>Password</label>
+              <input type="passphrase" name="password" onChange={this.handlePassphraseChange} />
+              <input type='submit' value='Submit' />
+            </form>
+          </div>
+
+          <h1>{this.state.result}</h1>
+        </div>  
       );
     }
   }
