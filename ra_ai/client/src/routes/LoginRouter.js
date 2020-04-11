@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginComponent from '../components/login/LoginComponent';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 //import PageComponent from './components/pageComponent';
 ////Page Tiers:
@@ -22,12 +23,24 @@ import LoginComponent from '../components/login/LoginComponent';
 
 
 //page compnent, into which we drop LoginComponent in
-function login() {
-  return (
-    <div className="LoginRouter">
-      <LoginComponent />
-    </div>
-  );
+class LoginRouter extends React.Component {
+  render()
+  {
+    return (
+      <div>
+        <BrowserRouter>
+          <div>
+            <div>
+              <Link to="/login">Login</Link>
+            </div>
+            <Switch>
+               <Route path="/login" component={LoginComponent} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
-export default login;
+export default LoginRouter;
