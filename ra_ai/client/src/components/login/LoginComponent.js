@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Login extends React.Component {
+class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,6 +66,11 @@ class Login extends React.Component {
       return (
         <div>
           <div>
+            <div>
+              <h1>IN NEW YORK I MILLY ROCK</h1>
+              <h2>TORTURE BALL AND COCK</h2>
+              <br />
+            </div>
             <form onSubmit={this.handleSubmit}>
               <label>Email</label>
               <input type="text" name="email" onChange={this.handleEmailChange} />
@@ -76,10 +81,10 @@ class Login extends React.Component {
           </div>
 
           <h1>{this.state.result}</h1>
-        </div>  
+        </div>
       );
     }
   }
 }
 
-export default Login;
+export default LoginComponent;
