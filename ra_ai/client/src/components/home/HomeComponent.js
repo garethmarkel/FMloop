@@ -1,13 +1,13 @@
 import React from 'react';
 import '../../css/App.css';
-import LoginRouter from '../../routes/LoginRouter';
+import { Link } from 'react-router-dom';
 
 class HomeComponent extends React.Component
 {
   render ()
   {
     return (
-      <LoginRouter />
+      <Link to="/login">Login</Link>
     );
   }
 }
