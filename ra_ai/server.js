@@ -3,6 +3,7 @@ var peopleRouter = require('./routes/people.js');
 
 const app = express();
 
+app.use(express.json());
 app.use('/api/people', peopleRouter);
 
 const port = 5000;

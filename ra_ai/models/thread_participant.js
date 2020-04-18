@@ -28,14 +28,6 @@ var ThreadParticipant = sequelize.define('thread_participant', {
   freezeTableName: true,
   tableName: 'thread_participant',
   updatedAt: false,
-  createdAt: false,
-  getterMethods: {
-    getThread: function(){
-      return this.thread_id;
-    },
-    getPerson: function(){
-      return this.person_id;
-    }
-  }
+  createdAt: false
 });
 module.exports = ThreadParticipant;

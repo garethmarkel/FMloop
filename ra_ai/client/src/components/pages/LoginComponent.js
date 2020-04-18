@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 class LoginComponent extends React.Component {
   constructor(props) {
@@ -31,23 +31,13 @@ class LoginComponent extends React.Component {
       "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
     ).then(result => result.json()).then(
       (result) => {
-
         var reslt ='Wrong password, motherfucker'
-        if(result.authenticated == true) {
+        if(result.authenticated === true) {
           reslt = 'Correct password, simp'
         }
         this.setState({
           correct: result.authenticated,
           result: reslt
-        });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      (error) => {
-        console.log(error);
-        this.setState({
-          correct: false,
-          error: error
         });
       }
     ).catch((err) => {

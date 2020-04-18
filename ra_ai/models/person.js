@@ -2,7 +2,7 @@ var Sequelize = require('Sequelize');
 var sequelize = require('../objects/sequelize.js');
 
 var Person = sequelize.define('person', {
-  id: {
+  person_id: {
     type: Sequelize.INTEGER,
     allowNull: true,
     primaryKey: true
@@ -23,11 +23,30 @@ var Person = sequelize.define('person', {
   email: {
     type: Sequelize.STRING(30),
     allowNull: false,
-    unique: true
+    unique: true,
+    validate: {
+      isUnique: function (value, next) {
+        var self = this;
+        Person.findOne({where: {email: value}})
+          .then(function(person) {
+            if(person) {
+              return next('Email already in use!');
+            }
+            return next();
+          }).catch(function(err) {
+            return next(err);
+          });
+      }
+    }
   },
   passphrase: {
     type: Sequelize.STRING(20),
     allowNull: false
+  },
+  freelancer: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+    default: false
   },
   user_rating: {
     type: Sequelize.DECIMAL(2,1),

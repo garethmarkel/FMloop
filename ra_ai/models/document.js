@@ -2,7 +2,7 @@ var Sequelize = require('Sequelize');
 var sequelize = require('../objects/sequelize.js');
 
 var Document = sequelize.define('document', {
-  id: {
+  document_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     allowNull: true
@@ -40,9 +40,6 @@ var Document = sequelize.define('document', {
     },
     getDocName: function(){
       return this.doc_name;
-    },
-    getProject: function() {
-      return this.project_id;
     }
   }
 });

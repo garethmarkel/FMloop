@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import '../../css/App.css';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +7,12 @@ class HomeComponent extends React.Component
   render ()
   {
     return (
-      <Link to="/login">Login</Link>
+      <div>
+        <Link to="/login">Login</Link>
+        <br />
+        <br />
+        <Link to="/create-account">Create Account</Link>
+      </div>
     );
   }
 }

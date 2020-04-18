@@ -3,7 +3,7 @@ var Person = require('person.js');
 var sequelize = require('../objects/sequelize.js');
 
 var Project = sequelize.define("project", {
-  id: {
+  project_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true
@@ -56,9 +56,6 @@ var Project = sequelize.define("project", {
       }
     },
     getterMethods: {
-      getId: function(){
-        return this.id;
-      },
       getTitle: function(){
         return this.title;
       },
@@ -73,9 +70,6 @@ var Project = sequelize.define("project", {
       },
       getCreated: function() {
         return this.created;
-      },
-      getOwnerId: function() {
-        return this.owner_id;
       }
     }
 });

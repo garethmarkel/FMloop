@@ -3,7 +3,7 @@ var sequelize = require('../objects/sequelize.js');
 var Project = require('project.js');
 
 var Thread = sequelize.define('thread', {
-  id: {
+  thread_id: {
     type: Sequelize.INTEGER,
     allowNull: true,
     primaryKey: true
@@ -21,15 +21,7 @@ var Thread = sequelize.define('thread', {
   freezeTableName: true,
   tableName: 'thread',
   updatedAt: false,
-  createdAt: false,
-  getterMethods: {
-    getThread: function(){
-      return this.id;
-    },
-    getProject: function(){
-      return this.project_id;
-    }
-  }
+  createdAt: false
 });
 
 module.exports = Thread;

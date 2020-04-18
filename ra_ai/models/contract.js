@@ -55,12 +55,6 @@ var Contract = sequelize.define('contract', {
     },
     getRating: function(){
       return this.performance_Rating;
-    },
-    getContractor: function() {
-      return this.contractor_id;
-    },
-    getProject: function() {
-      return this.project_id;
     }
   }
 });

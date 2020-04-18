@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('ra_ai', 'root', 'password',
+var sequelize = new Sequelize('freelance_ai', 'root', 'password',
 {
   host: 'localhost',
   port: '3306',

@@ -4,7 +4,7 @@ var Person = require('person.js');
 var Message = require('message.js');
 
 var Message = sequelize.define('message',{
-  id: {
+  message_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     allowNull: true
@@ -44,15 +44,9 @@ var Message = sequelize.define('message',{
     getSentDate: function(){
       return this.sent_date;
     },
-    getSender: function(){
-      return this.sender_id;
-    },
     getMessage: function() {
       return this.content;
     },
-    getThread: function() {
-      return this.thread_id;
-    }
   }
 });
 

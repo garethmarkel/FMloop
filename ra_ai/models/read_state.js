@@ -32,14 +32,8 @@ var ReadState = sequelize.define('read_state', {
   updatedAt: false,
   createdAt: 'read_date',
   getterMethods: {
-    getReadDate: function(){
+    getReadDate: function() {
       return this.read_date;
-    },
-    getMessage: function(){
-      return this.message_id;
-    },
-    getReader: function(){
-      return this.reader_id;
     }
   }
 });
