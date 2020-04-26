@@ -34,22 +34,27 @@ exports.authenticate = function(req, res, next)
 
 exports.createAccount = function(req, res, next)
 {
-  console.log(req.body == null);
   return Person.create({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
     passphrase: req.body.passphrase
   }).then(function (person) {
-      console.log('magnum gong');
-      return res.json({beans: 'beans'});
-      //return res.status(200).send({message: 'Good job'});
+    console.log('magnum gong');
+    console.log(res);
+    res.json({beans: 'beans'});
+
+    // return res.status(200).send({message: 'Good job'});
+    // return res.status(200);
   }).catch(Sequelize.ValidationError, function (err) {
-    return res.status(422).send(err.errors);
+    console.log('Sequelize error');
+    res.json(err);
   }).catch(function(err) {
-    return res.status(400).send({message: err.message});
+    console.log('catch all');
+    res.json(err);
   }).catch(function(err) {
+    console.log('why did this trigger');
     console.log(err);
-    return next(err);
+    next(err);
   });
 }

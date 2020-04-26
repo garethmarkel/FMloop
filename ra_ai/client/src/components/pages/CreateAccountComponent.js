@@ -1,6 +1,64 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 
+// const createAccount = async(args) => {
+//   fetch("api/people/create/", {
+//     method: 'post',
+//     body: JSON.stringify({
+//       first_name: args.first_name,
+//       last_name: args.last_name,
+//       email: args.email,
+//       passphrase: args.passphrase
+//     }),
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   }).then((result) => {
+//     console.log(result.status);
+//     console.log('STATUS TEXT ' + result.statusText);
+//     // console.log(result.json().beans)
+//     console.log('AAAA');
+//     console.log(result);
+//     var reslt = "";
+//
+//     if(result.status === 422) {
+//       reslt = 'Email is already in use you fucking clown';
+//       var data = {
+//         redirect: null,
+//         result: reslt,
+//         correct: false
+//       }
+//       return data;
+//     }
+//     else if (result.status === 200) {
+//       reslt = "You straight homie.";
+//
+//       var data = {
+//         redirect: '/login',
+//         result: reslt,
+//         correct: false
+//       }
+//       return data;
+//
+//       // this.history.push("/login");
+//     }
+//     else {
+//       reslt = 'Michael Vick did the right thing';
+//       console.log(reslt);
+//       var data = {
+//         redirect: null,
+//         result: reslt,
+//         correct: false
+//       }
+//       return data;
+//     }
+//   }).catch((err) =>
+//   {
+//     console.log('B E A N');
+//     console.log(err);
+//   });
+// }
+
 class CreateAccountComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +70,8 @@ class CreateAccountComponent extends React.Component {
       email:'',
       passphrase:'',
       confirm_passphrase: '',
-      result: ''
+      result: '',
+      redirect: null
     };
 
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -21,6 +80,67 @@ class CreateAccountComponent extends React.Component {
     this.handlePassphraseChange = this.handlePassphraseChange.bind(this);
     this.handleConfirmPassphraseChange = this.handleConfirmPassphraseChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+
+    // this.history = useHistory();
+  }
+
+  postAccount(args) {
+    fetch("api/people/create/", {
+     method: 'post',
+     body: JSON.stringify({
+       first_name: args.first_name,
+       last_name: args.last_name,
+       email: args.email,
+       passphrase: args.passphrase
+     }),
+     headers: {
+       'Content-Type': 'application/json'
+     }
+   }).then((response) => {
+     var resp = response;
+     return resp;
+   }).then((resp) => {
+     return resp;
+   });
+  }
+
+  desperation(args) {
+    var data = this.createAccount(args);
+    return data;
+  }
+
+  async createAccount(args) {
+    let prom = await this.postAccount(args );
+
+    var reslt = '';
+
+    console.log('PROM: ' + prom);
+    console.log(prom.status);
+    var data = null;
+
+    if(prom.status === 200) {
+      reslt = "You straight homie.";
+
+      data = {
+        redirect: '/login',
+        result: reslt,
+        correct: false
+      }
+
+      return data;
+    }
+    else if (prom.status === 422) {
+      reslt = 'Email is already in use you fucking clown';
+      data = {
+        redirect: null,
+        result: reslt,
+        correct: false
+      }
+      return data;
+    }
+
+    throw new Error('Drink bleach cock');
   }
 
   handleFirstNameChange(event) {
@@ -44,6 +164,8 @@ class CreateAccountComponent extends React.Component {
   }
 
   handleSubmit(event) {
+    event.preventDefault();
+    
     if (this.state.passphrase === this.state.confirm_passphrase) {
       //console.log(data);
       fetch("api/people/create/", {
@@ -55,65 +177,113 @@ class CreateAccountComponent extends React.Component {
           passphrase: this.state.passphrase
         }),
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         }
-      }).then((result) => {
-        console.log('see if it fails here');
-        console.log(result.status);
-        console.log(result.statusText);
-        console.log('AAAA');
-        console.log(result);
-        var reslt = "";
+      }).then(data => {
+        console.log('RESPONSE');
 
-        if(result.status === 422) {
-          reslt = 'Email is already in use you fucking clown';
-
-          event.preventDefault();
-        }
-        else if (result.status === 200) {
-          reslt = "You straight homie.";
-
-          this.setState({
+        if(data.status === 200) {
+          this.setState(() => ({
             correct: true
-          });
+          }));
+          console.log('correct');
         }
         else {
-          reslt = 'Michael Vick did the right thing';
-          console.log(reslt);
-          event.preventDefault();
+          console.log(data.status);
+          console.log('If the glove dont fit...');
         }
-
-        this.setState({
-          result: reslt
-        });
-
-        console.log('BBBB');
-      }).catch((err) =>
-      {
-        console.log('B E A N');
-        console.log(err);
-
-        event.preventDefault();
+      }).catch((err) => {
+        console.log('Sad boi error' + err);
       });
-    } else {
+
+
+      // console.log(sad);
+      // console.log(sad.status);
+      // console.log('ZOO WEE MAMA');
+      // console.log('var' + this.state.correct);
+      // //
+      // if(this.state.correct){
+      // this.setState({
+      //   redirect: '/login'
+      // });
+      // }
+
+
+      //.then((result) => {
+      //   console.log(result.status);
+      //   console.log('STATUS TEXT ' + result.statusText);
+      //   // console.log(result.json().beans)
+      //   console.log('AAAA');
+      //   console.log(result);
+      //   var reslt = "";
+      //
+      //   if(result.status === 422) {
+      //     reslt = 'Email is already in use you fucking clown';
+      //     this.setState((reslt) => ({
+      //       result: reslt
+      //     }));
+      //   }
+      //   else if (result.status === 200) {
+      //     reslt = "You straight homie.";
+      //
+      //     this.setState((reslt) => ({
+      //       correct: true,
+      //       result: reslt,
+      //       redirect: '/login'
+      //     }));
+      //
+      //     // this.history.push("/login");
+      //   }
+      //   else {
+      //     reslt = 'Michael Vick did the right thing';
+      //     console.log(reslt);
+      //     this.setState((reslt) => ({
+      //       result: reslt
+      //     }));
+      //   }
+      // }).catch((err) =>
+      // {
+      //   console.log('B E A N');
+      //   console.log(err);
+      // });
+      // var data = this.desperation(this.state);
+      //
+      // console.log('DATA:' + data);
+      //
+      // this.setState({
+      //   correct: data.correct,
+      //   redirect: data.redirect,
+      //   result: data.result
+      // });
+    }
+    else {
       this.setState({
         result: "Password and Password Confirmation do not match\n\n\n\n\t\t you fucking simp."
       });
+    }
+  }
 
-      event.preventDefault();
+  componentDidUpdate() {
+    if(this.state.correct){
+      this.setState({
+        redirect: '/login'
+      });
     }
   }
 
   render()
   {
     const error = this.state.error;
+
     if (error) {
       return <div>Error: {error.message}</div>;
-    } else if (this.state.correct === true){
+    }
+    else if (this.state.redirect){
       console.log('cock and ball');
-      return(<Redirect to = '/login' />)
-    } else {
+      // debugger;
+      return <Redirect to={this.state.redirect} />
+    }
+    else {
       return (
         <div>
           <div>

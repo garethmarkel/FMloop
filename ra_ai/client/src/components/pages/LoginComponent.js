@@ -15,7 +15,10 @@ class LoginComponent extends React.Component {
     this.handlePassphraseChange = this.handlePassphraseChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  componentDidMount() {
+    // debugger;
+    console.log('LADIES AND GENTLEMEN, WE GOT IM');
+  }
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
@@ -26,10 +29,10 @@ class LoginComponent extends React.Component {
 
   handleSubmit(event) {
     //console.log(JSON.stringify({name: this.state.value}));
-    console.log("hi");
     fetch(
       "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
-    ).then(result => result.json()).then(
+    ).then(result => result.json()
+    ).then(
       (result) => {
         var reslt ='Wrong password, motherfucker'
         if(result.authenticated === true) {
