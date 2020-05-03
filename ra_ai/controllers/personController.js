@@ -4,8 +4,6 @@ var Sequelize = require('sequelize');
 
 exports.authenticate = function(req, res, next)
 {
-  // console.log(req);
-
   var auth = false;
   var email = req.params.email.replace('..','.');
   var password = req.params.passphrase;
@@ -28,7 +26,9 @@ exports.authenticate = function(req, res, next)
 
     res.json({authenticated: auth});
   }).catch(err => {
-    console.log(err);
+    res.status(500).send('Something went wrong. Please try again!');
+  }).catch(err => {
+    return next(err);
   });
 }
 
@@ -40,21 +40,15 @@ exports.createAccount = function(req, res, next)
     email: req.body.email,
     passphrase: req.body.passphrase
   }).then(function (person) {
-    console.log('magnum gong');
-    console.log(res);
-    res.json({beans: 'beans'});
-
-    // return res.status(200).send({message: 'Good job'});
-    // return res.status(200);
+    res.status(200).send('Good job!');
   }).catch(Sequelize.ValidationError, function (err) {
-    console.log('Sequelize error');
-    res.json(err);
+    ///???
+    res.status(422).send('User already exists!');
   }).catch(function(err) {
-    console.log('catch all');
-    res.json(err);
+    res.status(500).send('Something went wrong. Please try again!');
   }).catch(function(err) {
-    console.log('why did this trigger');
+    console.log("You broke it. I don't know how, sorry.");
     console.log(err);
-    next(err);
+    return next(err);
   });
 }

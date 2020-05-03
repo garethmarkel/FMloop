@@ -1,24 +1,30 @@
 import React from "react";
+import { Redirect } from 'react-router-dom';
+import useAppContext from '../../libs/contextLib.js';
+//import AppContext from '../../libs/AppContext.js';
+
+const { userHasAuthenticated } = useAppContext();
 
 class LoginComponent extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
       correct: false,
       email:'',
       passphrase:'',
-      result: ''
+      result: '',
+      redirect: null
     };
 
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePassphraseChange = this.handlePassphraseChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
-  componentDidMount() {
-    // debugger;
-    console.log('LADIES AND GENTLEMEN, WE GOT IM');
-  }
+
+
+
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
@@ -28,40 +34,52 @@ class LoginComponent extends React.Component {
   }
 
   handleSubmit(event) {
-    //console.log(JSON.stringify({name: this.state.value}));
+    event.preventDefault();
+
     fetch(
       "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
     ).then(result => result.json()
     ).then(
       (result) => {
-        var reslt ='Wrong password, motherfucker'
+        var reslt ='Incorrect email and/or password. Please try again.'
+
         if(result.authenticated === true) {
-          reslt = 'Correct password, simp'
+          reslt = 'Correct password'
         }
-        this.setState({
+        this.setState(() => ({
           correct: result.authenticated,
           result: reslt
-        });
+        }));
       }
     ).catch((err) => {
       console.log(err);
     });
-    //alert('Your favorite flavor is: ' + this.state.value);
-    event.preventDefault();
+  }
+
+  componentDidUpdate() {
+    if(this.state.correct) {
+      userHasAuthenticated(true);
+      console.log(true);
+      this.setState({
+        redirect: '/dashboard'
+      });
+    }
   }
 
   render()
   {
-    const { error } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
+    let theme = this.context;
+    console.log(theme);
+
+    if (this.state.redirect) {
+
+      return <Redirect to={this.state.redirect} />
     } else {
       return (
         <div>
           <div>
             <div>
-              <h1>IN NEW YORK I MILLY ROCK</h1>
-              <h2>TORTURE BALL AND COCK</h2>
+              <h1>Login</h1>
               <br />
             </div>
             <form onSubmit={this.handleSubmit}>
@@ -73,7 +91,7 @@ class LoginComponent extends React.Component {
             </form>
           </div>
 
-          <h1>{this.state.result}</h1>
+          <h2>{this.state.result}</h2>
         </div>
       );
     }
