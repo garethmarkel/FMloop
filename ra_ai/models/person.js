@@ -1,6 +1,16 @@
+//define person model for users
+
 var Sequelize = require('Sequelize');
 var sequelize = require('../objects/sequelize.js');
-
+/*
+id INTEGER PRIMARY KEY AUTO_INCREMENT,
+first_name VARCHAR(20) NOT NULL,
+last_name VARCHAR(30) NOT NULL,
+title VARCHAR(30) NULL,
+email VARCHAR(30) NOT NULL UNIQUE,
+passphrase VARCHAR(20) NOT NULL,
+user_rating DECIMAL(2, 1) NULL
+*/
 var Person = sequelize.define('person', {
   person_id: {
     type: Sequelize.INTEGER,

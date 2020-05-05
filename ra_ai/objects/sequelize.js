@@ -1,3 +1,7 @@
+/*
+This module instantiates a new sequelize object, which is the controller
+for extracting data from the db.
+*/
 var Sequelize = require('sequelize');
 
 var sequelize = new Sequelize('freelance_ai', 'root', 'password',

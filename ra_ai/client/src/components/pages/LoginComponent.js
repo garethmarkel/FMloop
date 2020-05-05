@@ -1,3 +1,7 @@
+/*
+Still a work in progress
+
+*/
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import useAppContext from '../../libs/contextLib.js';
@@ -33,10 +37,12 @@ class LoginComponent extends React.Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
+  //handle changes to email field
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
 
+  //handle changes to passphrase field
   handlePassphraseChange(event) {
     this.setState({passphrase: event.target.value});
   }
@@ -45,18 +51,23 @@ class LoginComponent extends React.Component {
   Performs post request to create new user in db.
   */
   handleSubmit(event) {
+
+    //prevent reload
     event.preventDefault();
 
+    //GET authentification status from backend server
     fetch(
       "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
     ).then(result => result.json()
     ).then(
       (result) => {
+        //set message to show during testing phase--probably will become warning
         var reslt ='Incorrect email and/or password. Please try again.'
 
         if(result.authenticated === true) {
           reslt = 'Correct password'
         }
+        //use lambda to set state during async
         this.setState(() => ({
           correct: result.authenticated,
           result: reslt
@@ -69,6 +80,7 @@ class LoginComponent extends React.Component {
 
   /*
   If user successfully authenticated, set redirect to url of dashboard.
+  Goal is to set user info as context.
   */
   componentDidUpdate() {
     if(this.state.correct) {
@@ -79,7 +91,9 @@ class LoginComponent extends React.Component {
       });
     }
   }
-
+  //render function
+  //returns redirect if state redirect is not null,
+  //else returns login form
   render()
   {
     /*

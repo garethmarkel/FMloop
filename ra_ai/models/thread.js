@@ -1,7 +1,15 @@
+//Define model for comment threads on projects
+
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
 var Project = require('project.js');
 
+/*
+id INTEGER PRIMARY KEY AUTO_INCREMENT,
+project_id INTEGER,
+FOREIGN KEY (project_id) REFERENCES project (id)
+ON UPDATE RESTRICT ON DELETE RESTRICT
+*/
 var Thread = sequelize.define('thread', {
   thread_id: {
     type: Sequelize.INTEGER,
