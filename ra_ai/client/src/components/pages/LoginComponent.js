@@ -5,8 +5,18 @@ import useAppContext from '../../libs/contextLib.js';
 
 const { userHasAuthenticated } = useAppContext();
 
+/*
+This class represents the login page.
+*/
 class LoginComponent extends React.Component {
 
+  /*
+  Correct - whether the user successfully logged in.
+  Redirect - the url of the dashboard page that the user will be redirected to
+    once they login.
+  Result - the message of whether the user successfully authenticated or
+    not.
+  */
   constructor(props) {
     super(props);
     this.state = {
@@ -23,8 +33,6 @@ class LoginComponent extends React.Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
-
-
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
@@ -33,6 +41,9 @@ class LoginComponent extends React.Component {
     this.setState({passphrase: event.target.value});
   }
 
+  /*
+  Performs post request to create new user in db.
+  */
   handleSubmit(event) {
     event.preventDefault();
 
@@ -56,10 +67,13 @@ class LoginComponent extends React.Component {
     });
   }
 
+  /*
+  If user successfully authenticated, set redirect to url of dashboard.
+  */
   componentDidUpdate() {
     if(this.state.correct) {
       userHasAuthenticated(true);
-      console.log(true);
+
       this.setState({
         redirect: '/dashboard'
       });
@@ -68,13 +82,14 @@ class LoginComponent extends React.Component {
 
   render()
   {
-    let theme = this.context;
-    console.log(theme);
-
+    /*
+    If redirect prop is set, redirect to the prop's value (the url of the
+    dashboard).
+    */
     if (this.state.redirect) {
-
       return <Redirect to={this.state.redirect} />
-    } else {
+    }
+    else {
       return (
         <div>
           <div>
@@ -91,6 +106,9 @@ class LoginComponent extends React.Component {
             </form>
           </div>
 
+          /*
+          The message that pops up if a user failed to authenticate.
+          */
           <h2>{this.state.result}</h2>
         </div>
       );
