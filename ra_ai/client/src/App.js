@@ -1,3 +1,9 @@
+/*
+This file defines our app render function
+pretty muche xclusively acts as a router
+*/
+
+
 import React, { useState } from 'react';
 import './css/App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -22,9 +28,11 @@ import DashboardComponent from './components/pages/DashboardComponent';
 // }
 
 function App() {
-
+  //authentification context. doesn;t work yet.
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
+  //in react speak, render function
+  //returns routes which we call in redirects
   return (
     <div className="App">
       <AppContext.Provider value = {{isAuthenticated, userHasAuthenticated}}>

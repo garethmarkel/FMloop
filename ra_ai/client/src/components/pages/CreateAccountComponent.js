@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 This is the web page where users will get to create their account.
 */
 class CreateAccountComponent extends React.Component {
+  //construct instance, bind state to setters and hooks
   constructor(props) {
     super(props);
     this.state = {
@@ -27,32 +28,34 @@ class CreateAccountComponent extends React.Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
-
+  //handle first_name field
   handleFirstNameChange(event) {
     this.setState({first_name: event.target.value});
   }
-
+  //handle last_name field
   handleLastNameChange(event) {
     this.setState({last_name: event.target.value});
   }
-
+  //handle email field
   handleEmailChange(event) {
     this.setState({email: event.target.value});
   }
-
+  //handle passphrase field
   handlePassphraseChange(event) {
     this.setState({passphrase: event.target.value});
   }
-
+  //handle passphrase confirmation field
   handleConfirmPassphraseChange(event) {
     this.setState({confirm_passphrase: event.target.value});
   }
-
+  //handle submit button
   handleSubmit(event) {
+    //prevent page from undoing redirect
     event.preventDefault();
 
+    //double check to make sure user validated password
     if (this.state.passphrase === this.state.confirm_passphrase) {
-      //console.log(data);
+      //post results to server to be written to database
       fetch("api/people/create/", {
         method: 'post',
         body: JSON.stringify({
@@ -65,11 +68,14 @@ class CreateAccountComponent extends React.Component {
           'Content-Type': 'application/json',
         }
       }).then(data => {
+        //check for sucess
+        //enable redirect in componentDidUpdate
         if(data.status === 200) {
           this.setState(() => ({
             correct: true
           }));
         }
+        //if status is 422, user already exists
         else if(data.status === 422) {
           this.setState(() => ({
             result: 'User already exists. Please use a new email.'
@@ -85,12 +91,14 @@ class CreateAccountComponent extends React.Component {
       });
     }
     else {
+      //set message for unvalidated password
       this.setState({
         result: "Password and Password Confirmation do not match."
       });
     }
   }
-
+  //if post successful, set redirect value here
+  //called whenever update is clicked
   componentDidUpdate() {
     if(this.state.correct){
       this.setState({
@@ -99,6 +107,9 @@ class CreateAccountComponent extends React.Component {
     }
   }
 
+  //render function
+  //if redirect is not null, renders Redirect
+  //else, renders form
   render()
   {
     if (this.state.redirect){
