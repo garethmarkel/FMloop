@@ -1,5 +1,8 @@
 import { createContext } from 'react';
 
-const AppContext = createContext(null);
+const AppContext = createContext({
+  auth: 'false',
+  setAuth: () => {}
+});
 
 export default AppContext;

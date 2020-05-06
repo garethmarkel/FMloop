@@ -5,15 +5,19 @@ Still a work in progress
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import useAppContext from '../../libs/contextLib.js';
-//import AppContext from '../../libs/AppContext.js';
+import AppContext from '../../libs/AppContext.js';
 
-const { userHasAuthenticated } = useAppContext();
+//const { userHasAuthenticated } = useAppContext();
 
 /*
 This class represents the login page.
 */
 class LoginComponent extends React.Component {
-
+  static contextType = AppContext;
+  changeAuth(person){
+    //i want t do some logi specific to this class component then change the context value
+    this.context.setAuth(person);
+  }
   /*
   Correct - whether the user successfully logged in.
   Redirect - the url of the dashboard page that the user will be redirected to
@@ -66,6 +70,7 @@ class LoginComponent extends React.Component {
 
         if(result.authenticated === true) {
           reslt = 'Correct password'
+          this.changeAuth(result.person);
         }
         //use lambda to set state during async
         this.setState(() => ({
@@ -84,11 +89,10 @@ class LoginComponent extends React.Component {
   */
   componentDidUpdate() {
     if(this.state.correct) {
-      userHasAuthenticated(true);
-
       this.setState({
         redirect: '/dashboard'
       });
+
     }
   }
   //render function
@@ -101,7 +105,10 @@ class LoginComponent extends React.Component {
     dashboard).
     */
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+      console.log(this.context.person);
+      return (
+          <Redirect to={this.state.redirect} />
+      );
     }
     else {
       return (

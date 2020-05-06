@@ -27,29 +27,41 @@ import DashboardComponent from './components/pages/DashboardComponent';
 //   }
 // }
 
-function App() {
+class App extends React.Component {
   //authentification context. doesn;t work yet.
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
+
+  constructor(props){
+    super(props);
+    this.state = {
+      person: null,
+      setAuth: this.setAuth.bind(this)
+    };
+  }
+  setAuth(person) {
+    this.setState({person});
+  };
 
   //in react speak, render function
   //returns routes which we call in redirects
-  return (
-    <div className="App">
-      <AppContext.Provider value = {{isAuthenticated, userHasAuthenticated}}>
-        <BrowserRouter>
-          <div>
-            <Switch>
-              <Route exact path="/" component={HomeComponent} />
-              <Route path="/login" component={LoginComponent} />
-              <Route path="/dashboard" component={DashboardComponent} />
-              <Route path="/create-account" component={CreateAccountComponent} />
-              <Redirect from="*" to="/" />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </AppContext.Provider>
-    </div>
-  );
+  render () {
+    return (
+      <div className="App">
+        <AppContext.Provider value={this.state}>
+          <BrowserRouter>
+            <div>
+              <Switch>
+                <Route exact path="/" component={HomeComponent} />
+                <Route path="/login" component={LoginComponent} />
+                <Route path="/dashboard" component={DashboardComponent} />
+                <Route path="/create-account" component={CreateAccountComponent} />
+                <Redirect from="*" to="/" />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </AppContext.Provider>
+      </div>
+    );
+  }
 }
 
 export default App;

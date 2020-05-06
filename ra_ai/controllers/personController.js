@@ -24,7 +24,10 @@ exports.authenticate = function(req, res, next)
       }
     }
 
-    res.json({authenticated: auth});
+    res.json({
+      authenticated: auth,
+      person: person.dataValues
+    });
   }).catch(err => {
     res.status(500).send('Something went wrong. Please try again!');
   }).catch(err => {
@@ -43,6 +46,7 @@ exports.createAccount = function(req, res, next)
     res.status(200).send('Good job!');
   }).catch(Sequelize.ValidationError, function (err) {
     ///???
+    console.log(err);
     res.status(422).send('User already exists!');
   }).catch(function(err) {
     res.status(500).send('Something went wrong. Please try again!');

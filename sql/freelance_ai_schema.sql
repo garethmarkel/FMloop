@@ -98,7 +98,7 @@ CREATE TABLE read_state
 CREATE TABLE skill
 (
     skill_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    label VARCHAR(20) 
+    label VARCHAR(20)
 ) ENGINE=InnoDB AUTO_INCREMENT = 6001;
 
 CREATE TABLE has_skill
