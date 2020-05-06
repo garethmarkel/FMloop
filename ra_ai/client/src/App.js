@@ -29,13 +29,16 @@ import DashboardComponent from './components/pages/DashboardComponent';
 
 class App extends React.Component {
   //authentification context. doesn;t work yet.
-  setAuth = auth => {
-    this.setState({auth});
-  };
 
-  state = {
-    auth: false,
-    setAuth: this.setAuth
+  constructor(props){
+    super(props);
+    this.state = {
+      person: null,
+      setAuth: this.setAuth.bind(this)
+    };
+  }
+  setAuth(person) {
+    this.setState({person});
   };
 
   //in react speak, render function

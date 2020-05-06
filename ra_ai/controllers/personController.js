@@ -24,7 +24,10 @@ exports.authenticate = function(req, res, next)
       }
     }
 
-    res.json({authenticated: auth});
+    res.json({
+      authenticated: auth,
+      person: person.dataValues
+    });
   }).catch(err => {
     res.status(500).send('Something went wrong. Please try again!');
   }).catch(err => {
