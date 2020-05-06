@@ -5,9 +5,9 @@ Still a work in progress
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import useAppContext from '../../libs/contextLib.js';
-//import AppContext from '../../libs/AppContext.js';
+import AppContext from '../../libs/AppContext.js';
 
-const { userHasAuthenticated } = useAppContext();
+//const { userHasAuthenticated } = useAppContext();
 
 /*
 This class represents the login page.
@@ -84,8 +84,6 @@ class LoginComponent extends React.Component {
   */
   componentDidUpdate() {
     if(this.state.correct) {
-      userHasAuthenticated(true);
-
       this.setState({
         redirect: '/dashboard'
       });
@@ -101,7 +99,10 @@ class LoginComponent extends React.Component {
     dashboard).
     */
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+      //console.log(this.context.auth);
+      return (
+          <Redirect to={this.state.redirect} />
+      );
     }
     else {
       return (

@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS ra_ai;
-CREATE DATABASE IF NOT EXISTS ra_ai;
-USE ra_ai;
+DROP DATABASE IF EXISTS freelance_ai;
+CREATE DATABASE IF NOT EXISTS freelance_ai;
+USE freelance_ai;
 
 CREATE TABLE person
 (
@@ -10,7 +10,8 @@ CREATE TABLE person
     title VARCHAR(30) NULL,
     email VARCHAR(30) NOT NULL UNIQUE,
     passphrase VARCHAR(20) NOT NULL,
-    user_rating DECIMAL(2, 1) NULL
+    user_rating DECIMAL(2, 1) NULL,
+		freelancer BOOLEAN NULL
 ) ENGINE=InnoDB AUTO_INCREMENT = 1001;
 
 CREATE TABLE project
