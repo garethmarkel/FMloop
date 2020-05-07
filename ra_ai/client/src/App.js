@@ -13,7 +13,7 @@ import HomeComponent from './components/pages/HomeComponent';
 import LoginComponent from './components/pages/LoginComponent';
 import CreateAccountComponent from './components/pages/CreateAccountComponent';
 import DashboardComponent from './components/pages/DashboardComponent';
-//import EditAccountComponent from './components/pages/EditAccountComponent';
+import EditAccountComponent from './components/pages/EditAccountComponent';
 // class DebugRouter extends BrowserRouter {
 //   constructor(props){
 //     super(props);
@@ -30,6 +30,9 @@ import DashboardComponent from './components/pages/DashboardComponent';
 class App extends React.Component {
   //authentification context. doesn;t work yet.
 
+  //classic constructor method
+  //i think this only exists to persist the context as part of state in a way that we can bidn setAuth to,
+  //but i'm not sure. works tho
   constructor(props){
     super(props);
     this.state = {
@@ -37,12 +40,16 @@ class App extends React.Component {
       setAuth: this.setAuth.bind(this)
     };
   }
+
+  //class method to update person components
+  //you'll notice it looks like a normal react method call
   setAuth(person) {
     this.setState({person});
   };
 
   //in react speak, render function
   //returns routes which we call in redirects
+  // .Provider passes context down, where it can be consumed by .Consumers or merely this.COntext
   render () {
     return (
       <div className="App">
@@ -54,6 +61,7 @@ class App extends React.Component {
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/dashboard" component={DashboardComponent} />
                 <Route path="/create-account" component={CreateAccountComponent} />
+                <Route path="/edit-account" component={EditAccountComponent} />
                 <Redirect from="*" to="/" />
               </Switch>
             </div>

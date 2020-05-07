@@ -1,7 +1,3 @@
-/*
-Still a work in progress
-
-*/
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import useAppContext from '../../libs/contextLib.js';
@@ -15,7 +11,6 @@ This class represents the login page.
 class LoginComponent extends React.Component {
   static contextType = AppContext;
   changeAuth(person){
-    //i want t do some logi specific to this class component then change the context value
     this.context.setAuth(person);
   }
   /*
