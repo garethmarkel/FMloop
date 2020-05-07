@@ -4,7 +4,7 @@ pretty muche xclusively acts as a router
 */
 
 
-import React, { useState } from 'react';
+import React from 'react';
 import './css/App.css';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import AppContext from './libs/AppContext';
@@ -28,8 +28,6 @@ import DashboardComponent from './components/pages/DashboardComponent';
 // }
 
 class App extends React.Component {
-  //authentification context. doesn;t work yet.
-
   constructor(props){
     super(props);
     this.state = {
@@ -37,9 +35,10 @@ class App extends React.Component {
       setAuth: this.setAuth.bind(this)
     };
   }
+
   setAuth(person) {
     this.setState({person});
-  };
+  }
 
   //in react speak, render function
   //returns routes which we call in redirects

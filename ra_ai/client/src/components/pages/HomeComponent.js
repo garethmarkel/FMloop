@@ -15,8 +15,7 @@ This class represents the very first page that unauthenticated users see.
 Includes things like FAQ, website logo, example projects, and other
 intro stuff.
 */
-class HomeComponent extends React.Component
-{
+class HomeComponent extends React.Component {
   //Render function
   //Returns two links
   render ()

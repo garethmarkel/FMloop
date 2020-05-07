@@ -1,23 +1,13 @@
-/*
-Still a work in progress
-
-*/
 import React from "react";
 import { Redirect } from 'react-router-dom';
-import useAppContext from '../../libs/contextLib.js';
 import AppContext from '../../libs/AppContext.js';
-
-//const { userHasAuthenticated } = useAppContext();
 
 /*
 This class represents the login page.
 */
 class LoginComponent extends React.Component {
   static contextType = AppContext;
-  changeAuth(person){
-    //i want t do some logi specific to this class component then change the context value
-    this.context.setAuth(person);
-  }
+
   /*
   Correct - whether the user successfully logged in.
   Redirect - the url of the dashboard page that the user will be redirected to
@@ -41,6 +31,11 @@ class LoginComponent extends React.Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
+  changeAuth(person){
+    //i want t do some logi specific to this class component then change the context value
+    this.context.setAuth(person);
+  }
+
   //handle changes to email field
   handleEmailChange(event) {
     this.setState({email: event.target.value});
@@ -55,27 +50,29 @@ class LoginComponent extends React.Component {
   Performs post request to create new user in db.
   */
   handleSubmit(event) {
-
     //prevent reload
     event.preventDefault();
 
     //GET authentification status from backend server
     fetch(
       "api/people/authenticate/" + this.state.email.replace('.','..')+'/'+this.state.passphrase
-    ).then(result => result.json()
     ).then(
-      (result) => {
+      data => data.json()
+    ).then(
+      (data) => {
         //set message to show during testing phase--probably will become warning
-        var reslt ='Incorrect email and/or password. Please try again.'
+        var response ='Incorrect email and/or password. Please try again.';
 
-        if(result.authenticated === true) {
-          reslt = 'Correct password'
-          this.changeAuth(result.person);
+        if(data.authenticated === true) {
+          response = 'Correct password';
+          
+          this.changeAuth(data.person);
+          // console.log(result.person);
         }
         //use lambda to set state during async
         this.setState(() => ({
-          correct: result.authenticated,
-          result: reslt
+          correct: data.authenticated,
+          result: response
         }));
       }
     ).catch((err) => {
@@ -92,7 +89,6 @@ class LoginComponent extends React.Component {
       this.setState({
         redirect: '/dashboard'
       });
-
     }
   }
   //render function
@@ -105,9 +101,9 @@ class LoginComponent extends React.Component {
     dashboard).
     */
     if (this.state.redirect) {
-      console.log(this.context.person);
+      // console.log(this.context.person);
       return (
-          <Redirect to={this.state.redirect} />
+        <Redirect to={this.state.redirect} />
       );
     }
     else {
@@ -127,9 +123,6 @@ class LoginComponent extends React.Component {
             </form>
           </div>
 
-          /*
-          The message that pops up if a user failed to authenticate.
-          */
           <h2>{this.state.result}</h2>
         </div>
       );

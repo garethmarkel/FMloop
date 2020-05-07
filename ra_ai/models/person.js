@@ -12,7 +12,7 @@ passphrase VARCHAR(20) NOT NULL,
 user_rating DECIMAL(2, 1) NULL
 */
 var Person = sequelize.define('person', {
-  id: {
+  person_id: {
     type: Sequelize.INTEGER,
     allowNull: true,
     primaryKey: true
