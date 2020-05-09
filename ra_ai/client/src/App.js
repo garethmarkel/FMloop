@@ -28,15 +28,19 @@ import DashboardComponent from './components/pages/DashboardComponent';
 // }
 
 class App extends React.Component {
+
+
   constructor(props){
     super(props);
     this.state = {
-      person: null,
+      //person: localstorage.getItem('person'),
+
       setAuth: this.setAuth.bind(this)
     };
   }
 
   setAuth(person) {
+    //localstorage.setItem('person', person);
     this.setState({person});
   }
 

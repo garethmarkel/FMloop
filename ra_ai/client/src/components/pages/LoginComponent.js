@@ -65,7 +65,7 @@ class LoginComponent extends React.Component {
 
         if(data.authenticated === true) {
           response = 'Correct password';
-          
+
           this.changeAuth(data.person);
           // console.log(result.person);
         }

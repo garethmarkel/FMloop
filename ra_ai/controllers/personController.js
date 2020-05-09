@@ -69,3 +69,25 @@ exports.createAccount = function(req, res, next)
     return next(err);
   });
 }
+exports.editAccount = function(req, res, next)
+{
+  //find perosn by id
+  return Person.findOne({ where: { id: req.body.id } })
+    .then(function(person) {
+      //set values
+      person.email = req.body.email;
+      person.first_name = req.body.first_name;
+      person.last_name = req.body.last_name;
+      person.passphrase = req.body.passphrase;
+      //save person
+      person.save().then(function(person) {
+        res.json({
+          person: person.dataValues
+        });
+      }).catch(function(err) {
+        return next(err);
+      })
+    }).catch(function(err) {
+      return next(err);
+    })
+}
