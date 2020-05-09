@@ -29,6 +29,7 @@ class LoginComponent extends React.Component {
     this.handlePassphraseChange = this.handlePassphraseChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   changeAuth(person){
@@ -66,7 +67,7 @@ class LoginComponent extends React.Component {
         if(data.authenticated === true) {
           response = 'Correct password';
 
-          this.changeAuth(data.person);
+          this.changeAuth(JSON.stringify(data.person));
           // console.log(result.person);
         }
         //use lambda to set state during async
@@ -91,6 +92,15 @@ class LoginComponent extends React.Component {
       });
     }
   }
+
+  componentDidMount() {
+    if(this.context.getAuth()) {
+      this.setState({
+        redirect: '/dashboard'
+      });
+    }
+  }
+
   //render function
   //returns redirect if state redirect is not null,
   //else returns login form

@@ -2,7 +2,7 @@ var sequelize = require('../objects/sequelize.js');
 var Person = require('../models/person.js');
 var Sequelize = require('sequelize');
 
-exports.authenticate = function(req, res, next)
+exports.authenticate = function(req, res)
 {
   var auth = false;
   var email = req.params.email.replace('..','.');
@@ -10,8 +10,6 @@ exports.authenticate = function(req, res, next)
   var data = null;
 
   Person.findOne({ where: { email: email } }).then(result => {
-    console.log(result);
-
     if (result != null)
     {
       var foundPassphrase = result.dataValues.passphrase;
@@ -32,23 +30,20 @@ exports.authenticate = function(req, res, next)
           user_rating: result.dataValues.user_rating
         }
       }
-
-      var response = {
-        authenticated: auth,
-        person: data
-      }
     }
 
-    // console.log(response);
+    var response = {
+      authenticated: auth,
+      person: data
+    }
+
     res.json(response);
   }).catch(err => {
     res.status(500).send('Something went wrong. Please try again!');
-  }).catch(err => {
-    return next(err);
   });
 }
 
-exports.createAccount = function(req, res, next)
+exports.createAccount = function(req, res)
 {
   return Person.create({
     first_name: req.body.first_name,
@@ -57,37 +52,43 @@ exports.createAccount = function(req, res, next)
     passphrase: req.body.passphrase
   }).then(function (person) {
     res.status(200).send('Good job!');
-  }).catch(Sequelize.ValidationError, function (err) {
-    console.log(err);
-    res.status(422).send('User already exists!');
-  }).catch(function(err) {
-    console.log(err);
-    res.status(500).send('Something went wrong. Please try again!');
-  }).catch(function(err) {
-    console.log("You broke it. I don't know how, sorry.");
-    console.log(err);
-    return next(err);
+  }).catch(function (err) {
+    if(err === Sequelize.ValidationError){
+      res.status(422).send('User already exists!');
+    } else {
+      res.status(500).send('Something went wrong. Please try again!');
+    }
   });
 }
+
 exports.editAccount = function(req, res, next)
 {
   //find perosn by id
-  return Person.findOne({ where: { id: req.body.id } })
+  return Person.findOne({ where: { person_id: req.body.person_id } })
     .then(function(person) {
       //set values
       person.email = req.body.email;
       person.first_name = req.body.first_name;
       person.last_name = req.body.last_name;
-      person.passphrase = req.body.passphrase;
       //save person
       person.save().then(function(person) {
+
+        data = {
+          person_id: person.dataValues.person_id,
+          first_name: person.dataValues.first_name,
+          last_name: person.dataValues.last_name,
+          title: person.dataValues.title,
+          email: person.dataValues.email,
+          freelancer: person.dataValues.freelancer,
+          user_rating: person.dataValues.user_rating
+        }
+
         res.json({
-          person: person.dataValues
+          person: data
         });
-      }).catch(function(err) {
-        return next(err);
-      })
+      });
     }).catch(function(err) {
-      return next(err);
-    })
+    return next(err);
+    }
+  );
 }

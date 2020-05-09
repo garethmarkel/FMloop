@@ -1,10 +1,13 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
+import AppContext from '../../libs/AppContext.js';
 
 /*
 This is the web page where users will get to create their account.
 */
 class CreateAccountComponent extends React.Component {
+  static contextType = AppContext;
+  
   //construct instance, bind state to setters and hooks
   constructor(props) {
     super(props);
@@ -103,6 +106,14 @@ class CreateAccountComponent extends React.Component {
     if(this.state.correct){
       this.setState({
         redirect: '/login'
+      });
+    }
+  }
+
+  componentDidMount() {
+    if(this.context.getAuth()) {
+      this.setState({
+        redirect: '/dashboard'
       });
     }
   }

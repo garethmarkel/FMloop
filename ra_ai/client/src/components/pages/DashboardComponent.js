@@ -9,20 +9,21 @@ class DashboardComponent extends React.Component
 
   render ()
   {
-    if (!this.context.person) {
-      return <Redirect to='/login' />
-    } else {
+    if (this.context.getAuth()) {
       return (
         <div>
-          <h1>Hello, {this.context.person.first_name}</h1>
-          <ul>
-            <li><Link to="/edit-account">Login</Link></li>
-          </ul>
+          <h1>Hello, {this.context.getAuth().first_name}</h1>
+          <br />
+          <Link to="/edit-account">Edit Account</Link>
+          <br />
+          <Link to="/create-project">Create Project</Link>
         </div>
       );
+    }
+    else {
+      return (<Redirect to='/login' />);
     }
   }
 }
 
 export default DashboardComponent;
-//<Link to="/edit-account">Edit Account</Link>

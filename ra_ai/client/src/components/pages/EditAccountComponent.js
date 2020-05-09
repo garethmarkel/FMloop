@@ -16,7 +16,7 @@ class EditAccountComponent extends React.Component {
     super(props);
     this.state = {
       correct: false,
-      id: null,
+      person_id: null,
       first_name: '',
       last_name: '',
       email:'',
@@ -61,46 +61,38 @@ class EditAccountComponent extends React.Component {
     //prevent page from undoing redirect
     event.preventDefault();
 
-    //double check to make sure user validated password
-    if (this.state.passphrase === this.state.confirm_passphrase) {
-      //post results to server to be written to database
-      fetch("api/people/update/", {
-        method: 'post',
-        body: JSON.stringify({
-          id: this.state.id,
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          email: this.state.email,
-          passphrase: this.state.passphrase
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }).then(data => data.json()).then(data => {
-        //check for sucess
-        //overwrite auth
-        //enable redirect in componentDidUpdate
-        if(data.person) {
-          this.changeAuth(data.person);
-          this.setState(() => ({
-            correct: true
-          }));
-        }
-      }).catch((err) => {
-        ///We're going to want to log to some sort of logging tool here, splunk?
-        console.log('New error with server itself? ' + err);
-      });
-    }
-    else {
-      //set message for unvalidated password
-      this.setState({
-        result: "Password and Password Confirmation do not match."
-      });
-    }
+    //post results to server to be written to database
+    fetch("api/people/update/", {
+      method: 'post',
+      body: JSON.stringify({
+        person_id: this.state.person_id,
+        first_name: this.state.first_name,
+        last_name: this.state.last_name,
+        email: this.state.email
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(data => data.json()).then(data => {
+      //check for success
+      //overwrite auth
+      //enable redirect in componentDidUpdate
+      console.log(data.person);
+      if(data.person) {
+        this.changeAuth(JSON.stringify(data.person));
+        this.setState(() => ({
+          correct: true
+        }));
+      }
+    }).catch((err) => {
+      ///We're going to want to log to some sort of logging tool here, splunk?
+      console.log('New error with server itself? ' + err);
+    });
   }
   //if post successful, set redirect value here
   //called whenever update is clicked
   componentDidUpdate() {
+    console.log(this.state.correct);
     if(this.state.correct){
       this.setState({
         redirect: '/dashboard'
@@ -109,18 +101,16 @@ class EditAccountComponent extends React.Component {
   }
   //set state or redirect whenever component mounts (catch unauth)
   componentDidMount() {
-    if(!this.context.person){
+    if(this.context.getAuth()){
       this.setState({
-        redirect: '/login'
+        person_id: this.context.getAuth().person_id,
+        first_name: this.context.getAuth().first_name,
+        last_name: this.context.getAuth().last_name,
+        email: this.context.getAuth().email,
       });
     } else {
       this.setState({
-        id: this.context.person.id,
-        first_name: this.context.person.first_name,
-        last_name: this.context.person.last_name,
-        email: this.context.person.email,
-        passphrase: this.context.person.passphrase,
-        confirm_passphrase: this.context.person.passphrase,
+        redirect: '/login'
       });
     }
 
@@ -151,13 +141,6 @@ class EditAccountComponent extends React.Component {
               <br />
               <label>Last Name</label>
               <input type="text" value={this.state.last_name} name="last_name" onChange={this.handleLastNameChange} />
-              <br />
-              <label>Password</label>
-              <input type="passphrase" value={this.state.passphrase} name="password" onChange={this.handlePassphraseChange} />
-              <br />
-              <label>Confirm Password</label>
-              <input type="passphrase" value={this.state.confirm_passphrase} name="confirm_password" onChange={this.handleConfirmPassphraseChange} />
-              <br />
               <br />
               <input type='submit' value='Submit' />
             </form>

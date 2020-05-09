@@ -13,7 +13,9 @@ import HomeComponent from './components/pages/HomeComponent';
 import LoginComponent from './components/pages/LoginComponent';
 import CreateAccountComponent from './components/pages/CreateAccountComponent';
 import DashboardComponent from './components/pages/DashboardComponent';
-//import EditAccountComponent from './components/pages/EditAccountComponent';
+import EditAccountComponent from './components/pages/EditAccountComponent';
+import CreateProjectComponent from './components/pages/CreateProjectComponent';
+//import ProjectComponent from './components/pages/ProjectComponent';
 // class DebugRouter extends BrowserRouter {
 //   constructor(props){
 //     super(props);
@@ -33,15 +35,24 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      //person: localstorage.getItem('person'),
-
+      // person: localStorage.getItem('person').json(),
+      getAuth: this.getAuth.bind(this),
       setAuth: this.setAuth.bind(this)
     };
   }
 
+  getAuth() {
+    if(localStorage.getItem('person')) {
+      // console.log(localStorage.getItem('person'))
+      return JSON.parse(localStorage.getItem('person'));
+    }
+    else {
+      return null;
+    }
+  }
+
   setAuth(person) {
-    //localstorage.setItem('person', person);
-    this.setState({person});
+    localStorage.setItem('person', person);
   }
 
   //in react speak, render function
@@ -57,6 +68,8 @@ class App extends React.Component {
                 <Route path="/login" component={LoginComponent} />
                 <Route path="/dashboard" component={DashboardComponent} />
                 <Route path="/create-account" component={CreateAccountComponent} />
+                <Route path="/edit-account" component={EditAccountComponent} />
+                <Route path="/create-project" component={CreateProjectComponent} />
                 <Redirect from="*" to="/" />
               </Switch>
             </div>
@@ -66,6 +79,6 @@ class App extends React.Component {
     );
   }
 }
+// <Route path="/project" component={ProjectComponent} />
 
 export default App;
-//<Route path="/edit-account" component={EditAccountComponent} />
