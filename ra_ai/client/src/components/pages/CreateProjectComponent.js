@@ -63,7 +63,7 @@ class CreateProjectComponent extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    fetch("api/project/create", {
+    fetch("api/projects/create", {
       method: 'post',
       body: JSON.stringify({
         owner_id: this.state.owner_id,

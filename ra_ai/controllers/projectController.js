@@ -14,5 +14,5 @@ exports.createProject = function(req, res, next)
     res.json({project: project.dataValues});
   }).catch(function (err) {
     res.status(500).send('Something went wrong. Please try again!');
-  });
+  }).catch((err) => { return next(err); });
 }

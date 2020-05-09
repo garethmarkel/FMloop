@@ -1,5 +1,5 @@
 var Sequelize = require("Sequelize");
-var Person = require('person.js');
+var Person = require('./person.js');
 var sequelize = require('../objects/sequelize.js');
 
 var Project = sequelize.define("project", {
@@ -36,42 +36,44 @@ var Project = sequelize.define("project", {
       key: 'id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
-  }, {
-    freezeTableName: true,
-    tableName: 'project',
-    updatedAt: false,
-    createdAt: 'created',
-    setterMethods: {
-      setTitle: function(title){
-        this.setDataValue("title", title);
-      },
-      setExplanation: function(explanation){
-        this.setDataValue("explanation", explanation);
-      },
-      setPrice: function(value){
-        this.setDataValue("price", value);
-      },
-      setDueDate: function(date){
-        this.setDataValue("due_date", date);
-      }
-    },
-    getterMethods: {
-      getTitle: function(){
-        return this.title;
-      },
-      getExplanation: function() {
-        return this.explanation;
-      },
-      getPrice: function() {
-        return this.price;
-      },
-      getDueDate: function() {
-        return this.due_date;
-      },
-      getCreated: function() {
-        return this.created;
-      }
     }
+  }
+},{
+  freezeTableName: true,
+  tableName: 'project',
+  updatedAt: false,
+  createdAt: 'created',
+  setterMethods: {
+    setTitle: function(title){
+      this.setDataValue("title", title);
+    },
+    setExplanation: function(explanation){
+      this.setDataValue("explanation", explanation);
+    },
+    setPrice: function(value){
+      this.setDataValue("price", value);
+    },
+    setDueDate: function(date){
+      this.setDataValue("due_date", date);
+    }
+  },
+  getterMethods: {
+    getTitle: function(){
+      return this.title;
+    },
+    getExplanation: function() {
+      return this.explanation;
+    },
+    getPrice: function() {
+      return this.price;
+    },
+    getDueDate: function() {
+      return this.due_date;
+    },
+    getCreated: function() {
+      return this.created;
+    }
+  }
 });
 
 module.exports = Project;
