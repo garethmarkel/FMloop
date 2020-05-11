@@ -30,13 +30,14 @@ var Project = sequelize.define("project", {
   },
   owner_id: {
     type: Sequelize.INTEGER,
-    primaryKey: true,
     references: {
       model: Person,
       key: 'id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
-    }
+    },
+    contracted: {
+      type: Sequelize.BOOLEAN,
   }
 },{
   freezeTableName: true,
