@@ -15,7 +15,7 @@ import CreateAccountComponent from './components/pages/CreateAccountComponent';
 import DashboardComponent from './components/pages/DashboardComponent';
 import EditAccountComponent from './components/pages/EditAccountComponent';
 import CreateProjectComponent from './components/pages/CreateProjectComponent';
-//import ProjectComponent from './components/pages/ProjectComponent';
+import ProjectComponent from './components/pages/ProjectComponent';
 // class DebugRouter extends BrowserRouter {
 //   constructor(props){
 //     super(props);
@@ -57,6 +57,7 @@ class App extends React.Component {
 
   //in react speak, render function
   //returns routes which we call in redirects
+  //note the parametrization in some URLs--second slash fucks with proxy
   render () {
     return (
       <div className="App">
@@ -70,6 +71,7 @@ class App extends React.Component {
                 <Route path="/create-account" component={CreateAccountComponent} />
                 <Route path="/edit-account" component={EditAccountComponent} />
                 <Route path="/create-project" component={CreateProjectComponent} />
+                <Route path="/project:project_id" component={ProjectComponent} />
                 <Redirect from="*" to="/" />
               </Switch>
             </div>
@@ -79,6 +81,6 @@ class App extends React.Component {
     );
   }
 }
-// <Route path="/project" component={ProjectComponent} />
+//
 
 export default App;

@@ -24,7 +24,7 @@ class CreateProjectComponent extends React.Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleExplanationChange = this.handleExplanationChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
-    this.handleDueDate = this.handleDueDate.bind(this);
+    this.handleDueDateChange = this.handleDueDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -55,7 +55,7 @@ class CreateProjectComponent extends React.Component {
     this.setState({price: event.target.value});
   }
 
-  handleDueDate(event)
+  handleDueDateChange(event)
   {
     this.setState({due_date: event.target.value});
   }
@@ -77,10 +77,11 @@ class CreateProjectComponent extends React.Component {
       }
     }).then(data => data.json()
     ).then(data => {
-      var txtex = this.data.project_id + " was created";
+      //console.log(data);
+      //var txtex = data.project.project_id + " was created";
 
       this.setState(() => ({
-        result: "yes"
+        redirect: '/project' + data.project.project_id
       }));
     }).catch((err) => {
       ///We're going to want to log to some sort of logging tool here, splunk?

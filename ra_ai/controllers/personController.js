@@ -4,6 +4,7 @@ var Sequelize = require('sequelize');
 
 exports.authenticate = function(req, res)
 {
+  console.log('auth');
   var auth = false;
   var email = req.params.email.replace('..','.');
   var password = req.params.passphrase;
@@ -45,6 +46,7 @@ exports.authenticate = function(req, res)
 
 exports.createAccount = function(req, res)
 {
+  console.log(req.body);
   return Person.create({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -63,6 +65,7 @@ exports.createAccount = function(req, res)
 
 exports.editAccount = function(req, res, next)
 {
+  console.log('edit');
   //find perosn by id
   return Person.findOne({ where: { person_id: req.body.person_id } })
     .then(function(person) {

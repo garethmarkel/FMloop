@@ -23,6 +23,7 @@ CREATE TABLE project
     due_date DATETIME NOT NULL,
     created TIMESTAMP NOT NULL,
     owner_id INTEGER,
+		contracted BOOLEAN DEFAULT false,
     FOREIGN KEY (owner_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT = 2001;
