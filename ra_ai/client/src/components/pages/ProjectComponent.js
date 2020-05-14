@@ -1,7 +1,7 @@
 import React from "react";
 import AppContext from '../../libs/AppContext.js';
 import { Redirect, Link } from "react-router-dom";
-
+import ThreadComponent from "../blocks/ThreadComponent.js";
 
 /*
 Home page for a given project.
@@ -71,7 +71,7 @@ class ProjectComponent extends React.Component {
           <Link to="/dashboard">Return to my dashboard</Link>
         </div>
       );
-    } else {
+    } else if (this.state.project_id) {
       return (
         <div>
           <h1>{this.state.title}</h1>
@@ -82,10 +82,18 @@ class ProjectComponent extends React.Component {
           <p>{this.state.explanation}</p>
           <br />
           <br />
+          <ThreadComponent project_id={this.state.project_id} />
           <br />
           <Link to="/dashboard">Return to my dashboard</Link>
         </div>
       );
+    } else {
+      //this should become a sub-component in ../blocks/
+      return (
+        <div>
+          <h1>Loading...</h1>
+        </div>
+      )
     }
   }
 }

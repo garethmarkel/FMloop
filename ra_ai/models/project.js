@@ -38,6 +38,7 @@ var Project = sequelize.define("project", {
     },
     contracted: {
       type: Sequelize.BOOLEAN,
+    }
   }
 },{
   freezeTableName: true,

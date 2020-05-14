@@ -1,8 +1,8 @@
 //define our Thread participant tracking model
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
-var Thread = require('thread.js');
-var Person = require('person.js');
+var Thread = require('./thread.js');
+var Person = require('./person.js');
 
 /*
 person_id INTEGER,

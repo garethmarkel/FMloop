@@ -1,7 +1,8 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize');
-var Person = require('person.js');
-var Message = require('message.js');
+var Person = require('./person.js');
+var Message = require('./message.js');
+var Thread = require('./thread.js');
 
 var Message = sequelize.define('message',{
   message_id: {

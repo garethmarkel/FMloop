@@ -1,7 +1,8 @@
 //define read state model for tables to track whether a essage has been read
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
-var Message = require('message.js');
+var Message = require('./message.js');
+var Person = require('./person.js');
 
 /*
 reader_id INTEGER,

@@ -1,5 +1,5 @@
 var Sequelize = require('Sequelize');
-var Person = require('person.js');
+var Person = require('./person.js');
 var sequelize = require('../objects/sequelize.js');
 
 var Contract = sequelize.define('contract', {

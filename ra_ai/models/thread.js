@@ -2,7 +2,7 @@
 
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
-var Project = require('project.js');
+var Project = require('./project.js');
 
 /*
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -13,8 +13,8 @@ ON UPDATE RESTRICT ON DELETE RESTRICT
 var Thread = sequelize.define('thread', {
   thread_id: {
     type: Sequelize.INTEGER,
-    allowNull: true,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   project_id: {
     type: Sequelize.INTEGER,
