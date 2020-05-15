@@ -82,7 +82,7 @@ class ProjectComponent extends React.Component {
           <p>{this.state.explanation}</p>
           <br />
           <br />
-          <ThreadComponent project_id={this.state.project_id} />
+          <ThreadComponent project_id={this.state.project_id} person_id={this.context.getAuth().person_id}/>
           <br />
           <Link to="/dashboard">Return to my dashboard</Link>
         </div>

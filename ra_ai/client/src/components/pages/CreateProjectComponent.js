@@ -7,6 +7,7 @@ import AppContext from '../../libs/AppContext.js';
 Initial component for users to create projects
 */
 class CreateProjectComponent extends React.Component {
+  //import app context
   static contextType = AppContext;
 
   constructor(props) {
@@ -21,6 +22,7 @@ class CreateProjectComponent extends React.Component {
       result: null
     }
 
+    //bind state to hooks
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleExplanationChange = this.handleExplanationChange.bind(this);
     this.handlePriceChange = this.handlePriceChange.bind(this);
@@ -40,6 +42,7 @@ class CreateProjectComponent extends React.Component {
     }
   }
 
+  //handle field changes
   handleTitleChange(event)
   {
     this.setState({title: event.target.value});
@@ -60,6 +63,7 @@ class CreateProjectComponent extends React.Component {
     this.setState({due_date: event.target.value});
   }
 
+  //create project
   handleSubmit(event) {
     event.preventDefault()
 

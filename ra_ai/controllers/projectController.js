@@ -4,6 +4,9 @@ var Thread = require('../models/thread.js');
 var ThreadParticipant = require('../models/thread_participant.js');
 var Sequelize = require('sequelize');
 var async = require('async');
+
+//we're leaving this commented for now:
+
 // exports.createProject = function(req, res, next)
 // {
 //   console.log(req.body.due_date);
@@ -22,8 +25,10 @@ var async = require('async');
 //   }).catch((err) => { return next(err); });
 // }
 
+//using sync.waterfall to create thing sin a way that makes more sense than transactiosn
 exports.createProject = function(req, res, next)
 {
+  //first function can access values in environment
   async.waterfall([
     function(cb) {
       Project.create({
@@ -33,6 +38,9 @@ exports.createProject = function(req, res, next)
         due_date: req.body.due_date,
         owner_id: req.body.owner_id
       }).then((project) => {
+        //next can only access environment: pass these down. first value is error;
+        //don't need .catch because async will catch errors.
+        //this seems like a house of card but mozilla reccomends it so we're doing it
         cb(null, req, project);
       });
     },
@@ -60,6 +68,7 @@ exports.createProject = function(req, res, next)
   });
 }
 
+//find existing project
 exports.getProject = function(req, res, next) {
   Project.findOne({where:
     {project_id: req.body.project_id}
@@ -76,6 +85,8 @@ exports.getProject = function(req, res, next) {
   }).catch(err => { return next(err); });
 }
 
+
+//get all projects associated with a user for the dashboard
 exports.getUserProjects = function(req, res, next) {
   Project.findAll({where:
     {owner_id: req.body.owner_id}

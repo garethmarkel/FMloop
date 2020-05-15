@@ -1,19 +1,62 @@
 import React from "react";
-import AppContext from '../../libs/AppContext.js';
 
 /*
 component to render comment thread_id
 */
 
 class ThreadComponent extends React.Component {
+  //this component is a subcomponent--doesn't need context
   constructor(props){
     super(props);
     this.state = {
       project_id: props.project_id,
+      person_id: props.person_id,
       messages: null,
       isLoaded: null,
-      error: null
+      error: null,
+      new_comment: ''
     }
+
+    //bind functions
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  //handle changes to the comment field
+  handleCommentChange(e) {
+    this.setState({
+      new_comment: e.target.value
+    });
+  }
+
+  //write messages to database
+  handleSubmit(event) {
+    event.preventDefault()
+    fetch('/api/threads/writeMessage', {
+      method: 'post',
+      body: JSON.stringify({
+        thread_id: this.state.thread_id,
+        sender_id: this.state.person_id,
+        content: this.state.new_comment
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).then(data => data.json()).then((data) => {
+
+      //use es6 to push the new message to the array
+      //I don't know what ... is
+      this.setState(() => ({
+        messages: [...this.state.messages, data.message],
+        new_comment: ''
+      }));
+    }).catch((err) => {
+      this.setState(() => ({
+        error: err
+      }));
+    });
+
   }
 
   componentDidMount() {
@@ -30,7 +73,9 @@ class ThreadComponent extends React.Component {
       console.log(data.load_thread);
       this.setState(() => ({
         isLoaded: true,
-        messages: data.load_thread
+        messages: data.load_thread.messages,
+        participants: data.load_thread.thread_participants,
+        thread_id: data.load_thread.thread_id
       }));
     }).catch((err) => {
       this.setState(() => ({
@@ -40,6 +85,8 @@ class ThreadComponent extends React.Component {
   }
 
   render() {
+
+    //print out error: we probaby want to not show stack trace, view later
     if (this.state.error){
       return (
         <div>
@@ -47,12 +94,17 @@ class ThreadComponent extends React.Component {
         </div>
       )
     } else if (this.state.isLoaded) {
-      console.log(this.state.messages.messages[0].content);
-      const messages = this.state.messages.messages.map((message) =>
+      //map comments
+      const messages = this.state.messages.map((message) =>
         <li key={message.message_id}>{message.content}</li>);
+      //html needs rewriting
       return (
           <div>
             <ul>{messages}</ul>
+            <form onSubmit={this.handleSubmit}>
+              <input type='text' value={this.state.new_comment} label='new_comment' onChange={this.handleCommentChange}/>
+              <input type='submit' value='Submit' />
+            </form>
           </div>
       )
     } else {
