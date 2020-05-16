@@ -1,29 +1,10 @@
 var sequelize = require('../objects/sequelize.js');
+var async = require('async');
+
 var Project = require('../models/project.js');
 var Thread = require('../models/thread.js');
 var ThreadParticipant = require('../models/thread_participant.js');
 var Sequelize = require('sequelize');
-var async = require('async');
-
-//we're leaving this commented for now:
-
-// exports.createProject = function(req, res, next)
-// {
-//   console.log(req.body.due_date);
-//   return Project.create({
-//     title: req.body.title,
-//     explanation: req.body.explanation,
-//     price: req.body.price,
-//     due_date: req.body.due_date,
-//     owner_id: req.body.owner_id
-//   }).then(function (project) {
-//     console.log(project.dataValues);
-//     res.json({project: project.dataValues});
-//   }).catch(function (err) {
-//     console.log(err);
-//     res.status(500).send('Something went wrong. Please try again!');
-//   }).catch((err) => { return next(err); });
-// }
 
 //using sync.waterfall to create thing sin a way that makes more sense than transactiosn
 exports.createProject = function(req, res, next)

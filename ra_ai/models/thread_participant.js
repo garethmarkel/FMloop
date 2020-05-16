@@ -1,6 +1,7 @@
 //define our Thread participant tracking model
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
+
 var Thread = require('./thread.js');
 var Person = require('./person.js');
 
@@ -16,10 +17,10 @@ ON UPDATE RESTRICT ON DELETE RESTRICT
 var ThreadParticipant = sequelize.define('thread_participant', {
   person_id: {
     type: Sequelize.INTEGER,
-    primaryKey:true,
+    primaryKey: true,
     references: {
       model: Person,
-      key: 'id',
+      key: 'person_id',
       onUpdate:'restrict',
       onDelete: 'restrict'
     }
@@ -29,7 +30,7 @@ var ThreadParticipant = sequelize.define('thread_participant', {
     primaryKey: true,
     references: {
       model: Thread,
-      key: 'id',
+      key: 'thread_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
@@ -40,4 +41,8 @@ var ThreadParticipant = sequelize.define('thread_participant', {
   updatedAt: false,
   createdAt: false
 });
+
+// ThreadParticipant.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+// ThreadParticipant.belongsTo(Person, {foreignKey:'person_id', targetKey:'person_id'});
+
 module.exports = ThreadParticipant;

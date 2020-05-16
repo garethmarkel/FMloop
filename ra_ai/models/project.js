@@ -1,12 +1,20 @@
 var Sequelize = require("Sequelize");
-var Person = require('./person.js');
 var sequelize = require('../objects/sequelize.js');
+
+var Person = require('./person.js');
+var Thread = require('./thread.js');
+var Bid = require('./bid.js');
+var Document = require('./document.js');
 
 var Project = sequelize.define("project", {
   project_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    references: {
+      model: Bid,
+      key: 'project_id'
+    }
   },
   title: {
     type: Sequelize.STRING(30),
@@ -28,16 +36,21 @@ var Project = sequelize.define("project", {
     type: Sequelize.DATE,
     allowNull: false
   },
+  completion_date: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
   owner_id: {
     type: Sequelize.INTEGER,
     references: {
       model: Person,
-      key: 'id',
+      key: 'person_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     },
     contracted: {
       type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   }
 },{
@@ -77,5 +90,12 @@ var Project = sequelize.define("project", {
     }
   }
 });
+
+// Project.belongsTo(Person, {foreignKey: 'owner_id', targetKey:'person_id'});
+//
+// Project.hasOne(Thread, {foreignKey: 'project_id', targetKey: 'project_id'})
+//
+// Project.hasMany(Bid, {foreignKey: 'project_id', targetKey: 'project_id'});
+// Project.hasMany(Document, {foreignKey: 'project_id', targetKey: 'project_id'});
 
 module.exports = Project;

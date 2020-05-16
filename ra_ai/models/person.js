@@ -1,7 +1,15 @@
 //define person model for users
-
 var Sequelize = require('Sequelize');
 var sequelize = require('../objects/sequelize.js');
+
+var ThreadParticipant = require('./thread_participant.js');
+var Project = require('./project.js');
+var ReadState = require('./read_state.js');
+var Message = require('./message.js');
+var Bid = require('./bid.js');
+var HasSkill = require('./has_skill.js');
+var Thread = require('./thread.js');
+var Skill = require('./skill.js');
 /*
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
 first_name VARCHAR(20) NOT NULL,
@@ -15,7 +23,8 @@ var Person = sequelize.define('person', {
   person_id: {
     type: Sequelize.INTEGER,
     allowNull: true,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   first_name: {
     type: Sequelize.STRING(20),
@@ -87,27 +96,17 @@ var Person = sequelize.define('person', {
     setPassphrase: function(value){
       this.setDataValue('passphrase', value);
     }
-  },
-  getterMethods: {
-    getFirstName: function(){
-      return this.first_name;
-    },
-    getRating: function(){
-      return this.user_rating;
-    },
-    getLastName: function(){
-      return this.last_name;
-    },
-    getTitle: function(){
-      return this.title;
-    },
-    getEmail: function(){
-      return this.email;
-    },
-    getPassphrase: function(){
-      return this.passphrase;
-    }
   }
 });
+
+// Person.hasMany(Message, {foreignKey: 'person_id', targetKey:'sender_id'});
+// Person.hasMany(ReadState, {foreignKey:'person_id', targetKey:'reader_id'});
+// Person.hasMany(Project, {foreignKey: 'person_id', targetKey: 'owner_id'});
+// Person.hasMany(Bid, {foreignKey: 'person_id', targetKey: 'contractor_id'});
+// Person.hasMany(ThreadParticipant, {foreignKey: 'person_id', targetKey: 'person_id'});
+// Person.hasMany(HasSkill, {foreignKey: 'person_id', targetKey: 'person_id'});
+//
+// Person.belongsToMany(Thread, {through: 'thread_participant', foreignKey:'person_id', otherKey:'person_id',foreignKey:'thread_id'});
+// Person.belongsToMany(Skill, {through: 'has_skill', foreignKey:'person_id', otherKey:'skill_id', foreignKey:'skill_id'});
 
 module.exports = Person;

@@ -6,19 +6,18 @@ var ReadState = require('../models/read_state.js');
 var Project = require('../models/project.js');
 var Sequelize = require('sequelize');
 
-//Should this go in ./associations?
-Thread.hasMany(Message, {foreignKey: 'thread_id', targetKey: 'thread_id'});
-Message.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
-Thread.belongsToMany(ReadState, {through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'})
-ReadState.belongsToMany(Thread, { through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'});
-Thread.hasMany(ThreadParticipant, {foreignKey: 'thread_id', targetKey: 'thread_id'});
-ThreadParticipant.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
-Message.hasMany(ReadState, {foreignKey: 'message_id', targetKey: 'message_id'});
-ReadState.belongsTo(Message, {foreignKey: 'message_id', targetKey: 'message_id'});
-
-
 ///get exisiting messages
-exports.getMessages = function(req, res, next){
+exports.getMessages = function(req, res, next) {
+  //define associations
+  Thread.hasMany(Message, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+  Message.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+  Thread.belongsToMany(ReadState, {through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'})
+  ReadState.belongsToMany(Thread, { through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'});
+  Thread.hasMany(ThreadParticipant, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+  ThreadParticipant.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+  Message.hasMany(ReadState, {foreignKey: 'message_id', targetKey: 'message_id'});
+  ReadState.belongsTo(Message, {foreignKey: 'message_id', targetKey: 'message_id'});
+
   //this is how you chain models together
   Thread.findAll({
     where: {project_id: req.body.project_id},
@@ -47,6 +46,7 @@ exports.writeMessage = function(req, res, next){
     sender_id: req.body.sender_id,
     thread_id: req.body.thread_id
   }).then((message) => {
+    console.log(message);
     res.json({
       message: message.dataValues
     });

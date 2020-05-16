@@ -22,8 +22,9 @@ CREATE TABLE project
     price DECIMAL(5, 2) NOT NULL,
     due_date DATETIME NOT NULL,
     created TIMESTAMP NOT NULL,
+    completion_date DATETIME NULL,
     owner_id INTEGER,
-		contracted BOOLEAN DEFAULT false,
+	contracted BOOLEAN DEFAULT false,
     FOREIGN KEY (owner_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT = 2001;
@@ -39,12 +40,14 @@ CREATE TABLE document
 		ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT = 3001;
 
-CREATE TABLE contract
+CREATE TABLE bid
 (
 	project_id INTEGER,
     contractor_id INTEGER,
-    completion_date TIMESTAMP NULL,
+    projected_finish DATETIME NOT NULL,
     performance_rating DECIMAL(2, 1) NULL,
+    is_contract BOOLEAN DEFAULT false,
+    proposal TEXT NOT NULL,
     PRIMARY KEY (project_id, contractor_id),
     FOREIGN KEY (project_id) REFERENCES project (project_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT,

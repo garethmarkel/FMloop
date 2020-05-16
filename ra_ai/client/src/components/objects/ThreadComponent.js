@@ -47,8 +47,11 @@ class ThreadComponent extends React.Component {
 
       //use es6 to push the new message to the array
       //I don't know what ... is
+      var ary = this.state.messages;
+      ary.push(data.message);
+      console.log(ary);
       this.setState(() => ({
-        messages: [...this.state.messages, data.message],
+        messages: ary,
         new_comment: ''
       }));
     }).catch((err) => {
@@ -69,8 +72,7 @@ class ThreadComponent extends React.Component {
         'Content-Type': 'application/json',
       }
     }).then(data => data.json()).then((data) => {
-      console.log(data);
-      console.log(data.load_thread);
+
       this.setState(() => ({
         isLoaded: true,
         messages: data.load_thread.messages,

@@ -1,8 +1,10 @@
 //define read state model for tables to track whether a essage has been read
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
+
 var Message = require('./message.js');
 var Person = require('./person.js');
+var Thread = require('./thread.js');
 
 /*
 reader_id INTEGER,
@@ -19,17 +21,17 @@ var ReadState = sequelize.define('read_state', {
     type: Sequelize.INTEGER,
     references:{
       model: Person,
-      key: 'id',
+      key: 'person_id',
       onUpdate: 'restrict',
       onDelete:'restrict'
     },
-    primaryKey: true
+    primaryKey: true,
   },
   message_id:{
     type: Sequelize.INTEGER,
     references: {
       model: Message,
-      key: 'id',
+      key: 'message_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     },
@@ -42,12 +44,12 @@ var ReadState = sequelize.define('read_state', {
   freezeTableName: true,
   tableName: 'read_state',
   updatedAt: false,
-  createdAt: 'read_date',
-  getterMethods: {
-    getReadDate: function() {
-      return this.read_date;
-    }
-  }
+  createdAt: 'read_date'
 });
+
+// ReadState.belongsTo(Message, {foreignKey: 'message_id', targetKey: 'message_id'});
+// ReadState.belongsTo(Person, {foreignKey: 'reader_id', targetKey: 'person_id'});
+//
+// ReadState.belongsToMany(Thread, { through: 'message', foreignKey: 'message_id', otherKey: 'thread_id', targetKey:'thread_id'});
 
 module.exports = ReadState;

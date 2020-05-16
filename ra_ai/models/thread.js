@@ -1,8 +1,12 @@
 //Define model for comment threads on projects
-
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
+
+var Person = require('./person.js');
+var ThreadParticipant = require('./thread_participant.js');
 var Project = require('./project.js');
+var ReadState = require('./read_state.js');
+var Message = require('./message.js');
 
 /*
 id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -20,7 +24,7 @@ var Thread = sequelize.define('thread', {
     type: Sequelize.INTEGER,
     references: {
       model: Project,
-      key: 'id',
+      key: 'project_id',
       onUpdate:'restrict',
       onDelete: 'restrict'
     }
@@ -31,5 +35,13 @@ var Thread = sequelize.define('thread', {
   updatedAt: false,
   createdAt: false
 });
+
+// Thread.hasMany(Message, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+// Thread.hasMany(ThreadParticipant, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+//
+// Thread.belongsTo(Project, {foreignKey: 'project_id', targetKey:'project_id'});
+//
+// Thread.belongsToMany(Person, {through: 'thread_participant', foreignKey: 'thread_id', otherKey: 'person_id', targetKey: 'person_id'});
+// Thread.belongsToMany(ReadState, {through: 'message', foreignKey: 'thread_id', otherKey: 'message_id', targetKey: 'message_id'});
 
 module.exports = Thread;

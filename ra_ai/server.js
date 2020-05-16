@@ -19,5 +19,6 @@ This is where we put all of the defined routes for each model.
 app.use('/api/people', peopleRouter);
 app.use('/api/projects', projectsRouter);
 app.use('/api/threads', threadRouter);
+
 const port = 5000;
 app.listen(port, () => `Server running on port ${port}`);

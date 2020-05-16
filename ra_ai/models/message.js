@@ -1,14 +1,16 @@
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize');
+
 var Person = require('./person.js');
-var Message = require('./message.js');
+var ReadState = require('./read_state.js');
 var Thread = require('./thread.js');
 
 var Message = sequelize.define('message',{
   message_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: true
+    allowNull: true,
+    autoIncrement: true
   },
   sent_date: {
     type: Sequelize.DATE,
@@ -22,7 +24,7 @@ var Message = sequelize.define('message',{
     type: Sequelize.INTEGER,
     references: {
       model: Person,
-      key: 'id',
+      key: 'person_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
@@ -31,7 +33,7 @@ var Message = sequelize.define('message',{
     type: Sequelize.INTEGER,
     references: {
       model: Thread,
-      key: 'id',
+      key: 'thread_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
@@ -40,15 +42,12 @@ var Message = sequelize.define('message',{
   freezeTableName: true,
   tableName: 'message',
   updatedAt: false,
-  createdAt: 'sent_date',
-  getterMethods: {
-    getSentDate: function(){
-      return this.sent_date;
-    },
-    getMessage: function() {
-      return this.content;
-    },
-  }
+  createdAt: 'sent_date'
 });
+
+// Message.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
+// Message.belongsTo(Person, {foreignKey: 'sender_id', targetKey: 'person_id'});
+//
+// Message.hasMany(ReadState, {foreignKey: 'message_id', targetKey: 'message_id'});
 
 module.exports = Message;

@@ -1,11 +1,14 @@
 var Sequelize = require('Sequelize');
 var sequelize = require('../objects/sequelize.js');
 
+var Project = require('./project.js');
+
 var Document = sequelize.define('document', {
   document_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: true
+    allowNull: true,
+    autoIncrement: true
   },
   doc_name: {
     type: Sequelize.STRING(20),
@@ -19,7 +22,7 @@ var Document = sequelize.define('document', {
     type: Sequelize.INTEGER,
     references: {
       model: Project,
-      key: 'id',
+      key: 'project_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
@@ -33,15 +36,9 @@ var Document = sequelize.define('document', {
     setDir: function(value){
       this.setDataValue('dir', value);
     }
-  },
-  getterMethods: {
-    getDir: function(){
-      return this.dir;
-    },
-    getDocName: function(){
-      return this.doc_name;
-    }
   }
 });
+
+// Document.belongsTo(Project, {foreignKey: 'project_id', targetKey: 'project_id'});
 
 module.exports = Document;

@@ -1,7 +1,7 @@
 import React from "react";
 import AppContext from '../../libs/AppContext.js';
 import { Redirect, Link } from "react-router-dom";
-import ThreadComponent from "../blocks/ThreadComponent.js";
+import ThreadComponent from "../objects/ThreadComponent.js";
 
 /*
 Home page for a given project.

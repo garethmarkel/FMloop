@@ -1,14 +1,15 @@
 var Sequelize = require('Sequelize');
-var Person = require('./person.js');
 var sequelize = require('../objects/sequelize.js');
+var Person = require('./person.js');
+var Project = require('./project.js');
 
-var Contract = sequelize.define('contract', {
+var Bid = sequelize.define('bid', {
   project_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     references: {
       model: Project,
-      key: 'id',
+      key: 'project_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
@@ -18,20 +19,27 @@ var Contract = sequelize.define('contract', {
     primaryKey: true,
     references: {
       model: Person,
-      key: 'id',
+      key: 'person_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
     }
   },
-  completion_date: {
-    type: Sequelize.DATETIME,
-    allowNull: true,
-    defaultValue: null
+  projected_finish: {
+    type: Sequelize.DATE,
+    allowNull: false
   },
   performance_rating: {
     type: Sequelize.DECIMAL(2,1),
     allowNull: true,
     defaultValue: null
+  },
+  is_contract: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  proposal: {
+    type: Sequelize.TEXT,
+    allowNull: false
   }
 }, {
   freezeTableName: true,
@@ -39,24 +47,14 @@ var Contract = sequelize.define('contract', {
   updatedAt: false,
   createdAt: false,
   setterMethods: {
-    setCompleted: function(){
-      this.setDataValue('completion_date', Sequelize.NOW);
-    },
     setRating: function(value){
       this.setDataValue('performance_rating', value);
-    },
-    setContractor: function(Person){
-      this.setDataValue('performance_rating', Person.id);
-    }
-  },
-  getterMethods: {
-    getCompleted: function(){
-      return this.completion_date;
-    },
-    getRating: function(){
-      return this.performance_Rating;
     }
   }
 });
 
-module.exports = Contract;
+// Project.hasMany(Bid, {foreignKey: 'project_id', targetKey: 'project_id'});
+// Bid.belongsTo(Project, {foreignKey: 'project_id', targetKey: 'project_id'});
+// Bid.belongsTo(Person, {foreignKey: 'contractor_id', targetKey: 'person_id'});
+
+module.exports = Bid;
