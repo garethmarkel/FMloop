@@ -1,3 +1,10 @@
+/*
+This is the model that represents a project that a user can
+be an owner of/require work to be done on. For freelancers, they will
+be able to bid on and complete projects to the satisfaction of the
+project owner.
+*/
+
 var Sequelize = require("Sequelize");
 var sequelize = require('../objects/sequelize.js');
 
@@ -7,6 +14,9 @@ var Bid = require('./bid.js');
 var Document = require('./document.js');
 
 var Project = sequelize.define("project", {
+  /*
+  The primary key.
+  */
   project_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -16,30 +26,55 @@ var Project = sequelize.define("project", {
       key: 'project_id'
     }
   },
+  /*
+  The title of project.
+  */
   title: {
     type: Sequelize.STRING(30),
     allowNull: false
   },
+  /*
+  A full description of the project that outlines what tasks need to be done
+  and the requirements for successfully completing said tasks.
+  */
   explanation: {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  /*
+  The price that the project owner is willing to pay to freelancers
+  to complete the project.
+  */
   price: {
     type: Sequelize.DECIMAL(5, 2),
     allowNull: false
   },
+  /*
+  The due date of the project.
+  */
   due_date: {
     type: Sequelize.DATE,
     allowNull: false
   },
+  /*
+  Timestamp of when the project was created.
+  */
   created: {
     type: Sequelize.DATE,
     allowNull: false
   },
+  /*
+  Date on when the project was successfully completed. This will be
+  determined by the project owner after reviewing the work submitted by
+  the freelancer.
+  */
   completion_date: {
     type: Sequelize.DATE,
     allowNull: true
   },
+  /*
+  Foreign key that denotes the user that owns the project.
+  */
   owner_id: {
     type: Sequelize.INTEGER,
     references: {
@@ -47,11 +82,14 @@ var Project = sequelize.define("project", {
       key: 'person_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'
-    },
-    contracted: {
-      type: Sequelize.BOOLEAN,
-      defaultValue: false
     }
+  },
+  /*
+  Denotes whether the project has a freelancer currently working on it.
+  */
+  contracted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 },{
   freezeTableName: true,
@@ -70,23 +108,6 @@ var Project = sequelize.define("project", {
     },
     setDueDate: function(date){
       this.setDataValue("due_date", date);
-    }
-  },
-  getterMethods: {
-    getTitle: function(){
-      return this.title;
-    },
-    getExplanation: function() {
-      return this.explanation;
-    },
-    getPrice: function() {
-      return this.price;
-    },
-    getDueDate: function() {
-      return this.due_date;
-    },
-    getCreated: function() {
-      return this.created;
     }
   }
 });
