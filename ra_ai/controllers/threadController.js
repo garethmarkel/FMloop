@@ -11,12 +11,12 @@ exports.getMessages = function(req, res, next) {
   //define associations
   Thread.hasMany(Message, {foreignKey: 'thread_id', targetKey: 'thread_id'});
   Message.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
-  Thread.belongsToMany(ReadState, {through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'})
-  ReadState.belongsToMany(Thread, { through: 'message', foreignKey: 'message_id', otherKey: 'thread_id'});
   Thread.hasMany(ThreadParticipant, {foreignKey: 'thread_id', targetKey: 'thread_id'});
   ThreadParticipant.belongsTo(Thread, {foreignKey: 'thread_id', targetKey: 'thread_id'});
   Message.hasMany(ReadState, {foreignKey: 'message_id', targetKey: 'message_id'});
   ReadState.belongsTo(Message, {foreignKey: 'message_id', targetKey: 'message_id'});
+  //Thread.belongsToMany(ReadState, {through: 'message', foreignKey: 'thread_id', otherKey: 'message_id', targetKey: 'message_id'})
+  // ReadState.belongsToMany(Thread, {through: 'message', foreignKey: 'message_id', otherKey: 'thread_id', targetKey: 'thread_id'});
 
   //this is how you chain models together
   Thread.findAll({
