@@ -1,3 +1,8 @@
+/*
+This is the API route that allows the React front-end to call personController's
+logic functions.
+*/
+
 var express = require('express');
 var router = express.Router();
 var personController = require('../controllers/personController.js');

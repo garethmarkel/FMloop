@@ -1,3 +1,8 @@
+/*
+This is the controller that handles the actions that a person model
+can do like authenticate, log out, create an account, etc.
+*/
+
 var sequelize = require('../objects/sequelize.js');
 var Person = require('../models/person.js');
 var Sequelize = require('sequelize');
@@ -5,7 +10,7 @@ var Sequelize = require('sequelize');
 exports.authenticate = function(req, res)
 {
   // can probably get rid of all these prints
-  console.log('auth');
+  // console.log('auth');
   var auth = false;
   // apparently we need a second '.' as an escape character
   var email = req.params.email.replace('..','.');
@@ -53,7 +58,7 @@ exports.authenticate = function(req, res)
 exports.createAccount = function(req, res)
 {
   // can probably remove all these prints
-  console.log(req.body);
+  // console.log(req.body);
   return Person.create({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -72,8 +77,8 @@ exports.createAccount = function(req, res)
 // Function to edit an existing account
 exports.editAccount = function(req, res, next)
 {
-  console.log('edit');
-  //find perosn by id
+  // console.log('edit');
+  //find person by id
   return Person.findOne({ where: { person_id: req.body.person_id } })
     .then(function(person) {
       //set values
