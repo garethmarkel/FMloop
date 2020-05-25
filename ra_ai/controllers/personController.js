@@ -4,22 +4,27 @@ var Sequelize = require('sequelize');
 
 exports.authenticate = function(req, res)
 {
+  // can probably get rid of all these prints
   console.log('auth');
   var auth = false;
+  // apparently we need a second '.' as an escape character
   var email = req.params.email.replace('..','.');
   var password = req.params.passphrase;
   var data = null;
 
+  // snag the user from the db with a matching email
   Person.findOne({ where: { email: email } }).then(result => {
+    // if there is a match in the database
     if (result != null)
     {
       var foundPassphrase = result.dataValues.passphrase;
-
+      // can probably remove these prints
       console.log(foundPassphrase);
       console.log(password);
-
+      // if the password the user entered matches what we have in the db
       if (foundPassphrase === password)
       {
+        // let them log in and load the rest of their info
         auth = true;
         data = {
           person_id: result.dataValues.person_id,
@@ -32,20 +37,22 @@ exports.authenticate = function(req, res)
         }
       }
     }
-
+    // if there was no match in the database authenticated will be false and data null
     var response = {
       authenticated: auth,
       person: data
     }
 
     res.json(response);
+    // if there is an error we somehow haven't caught yet it will be caught here
   }).catch(err => {
     res.status(500).send('Something went wrong. Please try again!');
   });
 }
-
+// function to create account
 exports.createAccount = function(req, res)
 {
+  // can probably remove all these prints
   console.log(req.body);
   return Person.create({
     first_name: req.body.first_name,
@@ -62,7 +69,7 @@ exports.createAccount = function(req, res)
     }
   });
 }
-
+// Function to edit an existing account
 exports.editAccount = function(req, res, next)
 {
   console.log('edit');
