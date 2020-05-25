@@ -24,8 +24,8 @@ exports.authenticate = function(req, res)
     {
       var foundPassphrase = result.dataValues.passphrase;
       // can probably remove these prints
-      console.log(foundPassphrase);
-      console.log(password);
+      // console.log(foundPassphrase);
+      // console.log(password);
       // if the password the user entered matches what we have in the db
       if (foundPassphrase === password)
       {
