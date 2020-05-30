@@ -5,7 +5,7 @@ and be pretty content rich
 
 2020-05-04: added basic comments (Gareth)
 */
-
+import {Helmet} from 'react-helmet';
 import React from "react";
 import '../../css/App.css';
 import { Link } from 'react-router-dom';
@@ -22,8 +22,10 @@ class HomeComponent extends React.Component {
   {
     return (
       <div>
-        <ExteriorPage title={'Home Page'} innerHTML={
-          <div>
+        <Helmet>
+          <title>FREELANCE.ai</title>
+        </Helmet>
+        <div>
           <div id="openingtitle" class="jumbotron jumbotron-fluid shadow bg-dark">
             <div class ="container h-75 py-5 bg-dark">
               <h2 style={{textAlign: 'center', fontFamily: 'helvetica, Arial', color: 'white'}}> A new freelancing solution or some dumb text liek that</h2>
@@ -84,7 +86,7 @@ class HomeComponent extends React.Component {
             <br />
             <Link to="/create-account">Create Account</Link>
           </div>
-        </div> } />
+        </div>
       </div>
     );
   }

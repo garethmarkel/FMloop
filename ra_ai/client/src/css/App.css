@@ -2,3 +2,7 @@
    width: 100%;
    height: 100%;
  }
+
+ body.tan {
+   background-color: rgb(245,245,220)
+ }

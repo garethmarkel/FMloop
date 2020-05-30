@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect } from 'react-router-dom';
 import AppContext from '../../libs/AppContext.js';
 import ExteriorPage from '../templates/ExteriorPage.js';
+import {Helmet} from 'react-helmet';
 /*
 This class represents the login page.
 */
@@ -119,25 +120,29 @@ class LoginComponent extends React.Component {
     else {
       return (
         <div>
-          <div>
-            <div>
-              <h1>Login</h1>
-              <br />
-            </div>
-            <form onSubmit={this.handleSubmit}>
-              <label>Email</label>
-              <input type="text" name="email" onChange={this.handleEmailChange} />
-              <label>Password</label>
-              <input type="passphrase" name="password" onChange={this.handlePassphraseChange} />
-              <input type='submit' value='Submit' />
-            </form>
-          </div>
-
+          <Helmet>
+            <title>Login</title>
+          </Helmet>
+          <form onSubmit={this.handleSubmit}>
+            <label>Email</label>
+            <input type="text" name="email" onChange={this.handleEmailChange} />
+            <label>Password</label>
+            <input type="passphrase" name="password" onChange={this.handlePassphraseChange} />
+            <input type='submit' value='Submit' />
+          </form>
           <h2>{this.state.result}</h2>
         </div>
+
       );
     }
   }
 }
 
 export default LoginComponent;
+
+/*
+<div>
+  <h1>Login</h1>
+  <br />
+</div>
+*/

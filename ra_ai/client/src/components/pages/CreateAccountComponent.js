@@ -1,13 +1,13 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import AppContext from '../../libs/AppContext.js';
-
+import {Helmet} from 'react-helmet';
 /*
 This is the web page where users will get to create their account.
 */
 class CreateAccountComponent extends React.Component {
   static contextType = AppContext;
-  
+
   //construct instance, bind state to setters and hooks
   constructor(props) {
     super(props);
@@ -129,6 +129,9 @@ class CreateAccountComponent extends React.Component {
     else {
       return (
         <div>
+          <Helmet>
+            <title>Create Account</title>
+          </Helmet>
           <div>
             <div>
               <h1>Create Account</h1>
