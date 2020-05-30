@@ -23,7 +23,7 @@ CREATE TABLE project
     due_date DATETIME NOT NULL,
     created TIMESTAMP NOT NULL,
     completion_date DATETIME NULL,
-    owner_id INTEGER,
+    owner_id INTEGER NOT NULL,
 	contracted BOOLEAN DEFAULT false,
     FOREIGN KEY (owner_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -34,7 +34,7 @@ CREATE TABLE document
 	document_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     doc_name VARCHAR(20) NOT NULL,
     dir VARCHAR(10) NOT NULL,
-    project_id INTEGER,
+    project_id INTEGER NOT NULL,
     CONSTRAINT UNIQUE (doc_name, dir),
     FOREIGN KEY (project_id) REFERENCES project (project_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -58,7 +58,7 @@ CREATE TABLE bid
 CREATE TABLE thread
 (
 	thread_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    project_id INTEGER,
+    project_id INTEGER NOT NULL,
     FOREIGN KEY (project_id) REFERENCES project (project_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT = 4001;
@@ -79,8 +79,8 @@ CREATE TABLE message
 	message_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     sent_date TIMESTAMP NOT NULL,
     content TEXT NOT NULL,
-    sender_id INTEGER,
-    thread_id INTEGER,
+    sender_id INTEGER NOT NULL,
+    thread_id INTEGER NOT NULL,
     FOREIGN KEY (sender_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT,
 	FOREIGN KEY (thread_id) REFERENCES thread (thread_id)
