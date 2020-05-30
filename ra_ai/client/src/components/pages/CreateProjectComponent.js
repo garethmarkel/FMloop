@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import AppContext from '../../libs/AppContext.js';
 
-
 /*
 Initial component for users to create projects
 */
