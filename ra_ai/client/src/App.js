@@ -43,7 +43,12 @@ class App extends React.Component {
   getAuth() {
     if(localStorage.getItem('person')) {
       // console.log(localStorage.getItem('person'))
-      return JSON.parse(localStorage.getItem('person'));
+      try {
+        var person = JSON.parse(localStorage.getItem('person'));
+        return person;
+      } catch {
+        return null;
+      }
     }
     else {
       return null;

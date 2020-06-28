@@ -53,7 +53,8 @@ exports.authenticate = function(req, res)
 exports.createAccount = function(req, res)
 {
   // can probably remove all these prints
-  // console.log(req.body);
+  console.log('TEST');
+  console.log(req.body);
   return Person.create({
     first_name: req.body.first_name,
     last_name: req.body.last_name,

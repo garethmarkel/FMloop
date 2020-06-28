@@ -27,13 +27,13 @@ class HomeComponent extends React.Component {
         </Helmet>
         <div>
           <div id="openingtitle" className="jumbotron jumbotron-fluid shadow bg-dark">
-            <div class ="container h-75 py-5 bg-dark">
+            <div className="container h-75 py-5 bg-dark">
               <h2 style={{textAlign: 'center', fontFamily: 'helvetica, Arial', color: 'white'}}> A new freelancing solution or some dumb text liek that</h2>
             </div>
           </div>
           <div id="openingcarousel" className="carousel slide" data-ride="carousel">
-            <ul class="carousel-indicators bg-dark">
-              <li data-target="#openingcarousel" data-slide-to="0" class="active"></li>
+            <ul className="carousel-indicators bg-dark">
+              <li data-target="#openingcarousel" data-slide-to="0" className="active"></li>
               <li data-target="#openingcarousel" data-slide-to="1"></li>
               <li data-target="#openingcarousel" data-slide-to="2"></li>
             </ul>
