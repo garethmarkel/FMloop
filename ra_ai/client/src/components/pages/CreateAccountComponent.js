@@ -59,6 +59,7 @@ class CreateAccountComponent extends React.Component {
     //double check to make sure user validated password
     if (this.state.passphrase === this.state.confirm_passphrase) {
       //post results to server to be written to database
+      console.log(this.state);
       fetch("api/people/create/", {
         method: 'post',
         body: JSON.stringify({
@@ -73,6 +74,8 @@ class CreateAccountComponent extends React.Component {
       }).then(data => {
         //check for sucess
         //enable redirect in componentDidUpdate
+        console.log('AAAA');
+        console.log(data);
         if(data.status === 200) {
           this.setState(() => ({
             correct: true

@@ -69,7 +69,6 @@ class LoginComponent extends React.Component {
           response = 'Correct password';
 
           this.changeAuth(JSON.stringify(data.person));
-          // console.log(result.person);
         }
         //use lambda to set state during async
         this.setState(() => ({
