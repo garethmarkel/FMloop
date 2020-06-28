@@ -9,8 +9,6 @@ var Sequelize = require('sequelize');
 
 exports.authenticate = function(req, res)
 {
-  // can probably get rid of all these prints
-  // console.log('auth');
   var auth = false;
   // apparently we need a second '.' as an escape character
   var email = req.params.email.replace('..','.');
@@ -23,9 +21,6 @@ exports.authenticate = function(req, res)
     if (result != null)
     {
       var foundPassphrase = result.dataValues.passphrase;
-      // can probably remove these prints
-      // console.log(foundPassphrase);
-      // console.log(password);
       // if the password the user entered matches what we have in the db
       if (foundPassphrase === password)
       {

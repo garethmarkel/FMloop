@@ -24,8 +24,8 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("confirm_password").send_keys("a")
         # hit enter and send that shit
         driver.find_element_by_name("confirm_password").send_keys(Keys.RETURN)
-        # should be created successfully
-        assert "User already exists. Please use a new email." not in driver.page_source
+        # should be created successfully, should redirect us
+        assert "/login" in driver.current_url
 
     def test_create_account_existing_user(self):
         create_login[1].click()
@@ -39,6 +39,7 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("confirm_password").send_keys(Keys.RETURN)
         # should be rejected if run after basic test
         assert "User already exists. Please use a new email." in driver.page_source
+        assert "/login" in driver.current_url
 
     def test_create_account_reject_accept(self):
         create_login[1].click()
@@ -52,6 +53,8 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("confirm_password").send_keys(Keys.RETURN)
         # should be rejected if run after basic test
         assert "User already exists. Please use a new email." in driver.page_source
+        assert "/login" in driver.current_url
+        assert "/create-account" not in driver.current_url
 
         driver.find_element_by_name("email").send_keys("b")
         driver.find_element_by_name("first_name").send_keys("b")
@@ -60,6 +63,7 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("confirm_password").send_keys("b")
         # should not be rejected
         assert "User already exists. Please use a new email." not in driver.page_source
+        assert "/create-account" in driver.current_url
 
     def test_login_basic_accept(self):
         create_login[0].click()
@@ -68,7 +72,8 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("password").send_keys('a')
         # hit enter and send
         driver.find_element_by_name("password").send_keys(Keys.RETURN)
-        # TODO add assertion that this worked
+        # should now be redirected to BLANK
+        assert ""
 
     def test_login_no_account(self):
         create_login[0].click()
@@ -77,7 +82,9 @@ class TestCreateLoginAccount(unittest.TestCase):
         driver.find_element_by_name("password").send_keys("c")
         # hit enter and send
         driver.find_element_by_name("password").send_keys(Keys.RETURN)
-        # TODO add assertion that this failed
+        # should be rejected and not redirected
+        assert "/login" in driver.current_url
+        assert ""
 
     def test_login_wrong_password(self):
         create_login[0].click()
