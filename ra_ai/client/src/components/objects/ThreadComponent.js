@@ -62,7 +62,6 @@ class ThreadComponent extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Hi");
     fetch('/api/threads/getMessages', {
       method: 'post',
       body: JSON.stringify({

@@ -55,11 +55,9 @@ exports.getProject = function(req, res, next) {
     {project_id: req.body.project_id}
   }).then((project) => {
     if(project !== null) {
-      if(project.dataValues.owner_id != req.body.owner_id) {
-        res.status(500).send("This resource cannot be accessed");
-      } else {
-        res.json({project: project.dataValues});
-      }
+
+      res.json({project: project.dataValues});
+
     } else {
       res.status(404).send("Project not found");
     }
@@ -77,6 +75,21 @@ exports.getUserProjects = function(req, res, next) {
       res.json({projects: ret});
     } else {
       res.status(404).send("Project not found");
+    }
+  }).catch(err => { return next(err); });
+}
+
+//get all available projects
+exports.getAvailableProjects = function(req, res, next) {
+  console.log('request logged');
+  Project.findAll({where:
+    {contracted: false}
+  }).then((dict) => {
+    if(dict !== null) {
+      var ret = dict.map((proj) => proj.dataValues);
+      res.json({projects: ret});
+    } else {
+      res.status(404).send("No projects found");
     }
   }).catch(err => { return next(err); });
 }

@@ -11,5 +11,6 @@ router.get('/authenticate/:email/:passphrase', personController.authenticate);
 
 router.post('/create', personController.createAccount);
 router.post('/update', personController.editAccount);
+router.post('/becomeFreelancer', personController.becomeFreelancer);
 
 module.exports = router;

@@ -2,8 +2,10 @@ import React from "react";
 import '../../css/App.css';
 import { Link, Redirect } from 'react-router-dom';
 import AppContext from '../../libs/AppContext.js';
+import ProjectWidget from '../objects/ProjectWidget'
 /*
 Dashboard compnent: displays user links to projects, payment, etc
+TODO: all projects you are the contractor on
 */
 class DashboardComponent extends React.Component
 {
@@ -16,6 +18,7 @@ class DashboardComponent extends React.Component
     }
     this.componentDidMount = this.componentDidMount.bind(this);
     this.displayProjects = this.displayProjects.bind(this);
+    this.freelancerRegistration = this.freelancerRegistration.bind(this);
   }
 
   componentDidMount() {
@@ -42,16 +45,30 @@ class DashboardComponent extends React.Component
     }
   }
 
+  //show all your projects you own
   displayProjects()
   {
     var activeProjects = null;
 
     if(this.state.projects) {
       activeProjects = this.state.projects.map((project) =>
-        <li key={project.project_id}><Link to={"/project" + project.project_id}>{project.title}</Link></li>);
+        <li key={project.project_id}><Link to={"/project" + project.project_id}><ProjectWidget project={project} /></Link></li>);
     }
 
     return activeProjects;
+  }
+
+  //link to connect to register as a freelancer--if freelancer, links to available projects
+  freelancerRegistration()
+  {
+    var registrationLink = null;
+    if(!this.context.getAuth().freelancer) {
+      registrationLink = <Link to='/freelancer-registration'>Become a freelancer</Link>;
+    } else {
+      registrationLink = <Link to='/project-list'>See Available Projects</Link>;
+    }
+
+    return registrationLink;
   }
 
   render ()
@@ -66,6 +83,8 @@ class DashboardComponent extends React.Component
           <Link to="/edit-account">Edit Account</Link>
           <br />
           <Link to="/create-project">Create Project</Link>
+          <br />
+          { this.freelancerRegistration() }
           <br />
           { this.displayProjects() }
           <form onSubmit={ () => { localStorage.clear() } }>
