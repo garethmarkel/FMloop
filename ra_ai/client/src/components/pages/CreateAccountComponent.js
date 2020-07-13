@@ -74,8 +74,6 @@ class CreateAccountComponent extends React.Component {
       }).then(data => {
         //check for sucess
         //enable redirect in componentDidUpdate
-        console.log('AAAA');
-        console.log(data);
         if(data.status === 200) {
           this.setState(() => ({
             correct: true

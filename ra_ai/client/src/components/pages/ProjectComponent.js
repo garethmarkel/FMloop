@@ -2,6 +2,7 @@ import React from "react";
 import AppContext from '../../libs/AppContext.js';
 import { Redirect, Link } from "react-router-dom";
 import ThreadComponent from "../objects/ThreadComponent.js";
+import BidComponent from "../objects/BidComponent.js";
 
 /*
 Home page for a given project.
@@ -15,6 +16,7 @@ class ProjectComponent extends React.Component {
     super(props);
     this.state = {
       project_id: null,
+      owner_id: null,
       title: null,
       explanation: null,
       price: null,
@@ -26,15 +28,15 @@ class ProjectComponent extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
+  //on mount, get all the details for your project
   componentDidMount() {
     const {project_id} = this.props.match.params;
     if(this.context.getAuth()){
-      var owner_id = this.context.getAuth().person_id;
+
       fetch("api/projects/getProject", {
         method: 'post',
         body: JSON.stringify({
-          project_id: project_id,
-          owner_id: owner_id
+          project_id: project_id
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +48,8 @@ class ProjectComponent extends React.Component {
           explanation: data.project.explanation,
           price: data.project.price,
           due_date: data.project.due_date,
-          created: data.project.created
+          created: data.project.created,
+          owner_id: data.project.owner_id
         }));
       }).catch((err) => {
         this.setState(() => ({
@@ -60,6 +63,7 @@ class ProjectComponent extends React.Component {
     }
   }
 
+  //render project details, bids, and threads
   render() {
     if(this.state.redirect) {
       return <Redirect to={this.state.redirect} />
@@ -81,6 +85,7 @@ class ProjectComponent extends React.Component {
           <br />
           <p>{this.state.explanation}</p>
           <br />
+          <BidComponent project={this.state} viewer_id={this.context.getAuth().person_id} />
           <br />
           <ThreadComponent project_id={this.state.project_id} person_id={this.context.getAuth().person_id}/>
           <br />

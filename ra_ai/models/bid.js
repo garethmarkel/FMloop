@@ -62,7 +62,7 @@ var Bid = sequelize.define('bid', {
   },
   /*
   The description that the feelancer will input on how he/she will plan on
-  finishing the project. 
+  finishing the project.
   */
   proposal: {
     type: Sequelize.TEXT,
@@ -70,7 +70,7 @@ var Bid = sequelize.define('bid', {
   }
 }, {
   freezeTableName: true,
-  tableName: 'contract',
+  tableName: 'bid',
   updatedAt: false,
   createdAt: false,
   setterMethods: {
