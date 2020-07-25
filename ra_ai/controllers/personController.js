@@ -108,3 +108,34 @@ exports.editAccount = function(req, res, next)
     }
   );
 }
+
+// Function to set an en existing person to a freelancer
+exports.becomeFreelancer = function(req, res, next)
+{
+  //find person by id
+  return Person.findOne({ where: { person_id: req.body.person_id } })
+    .then(function(person) {
+      //set values
+      person.freelancer = true;
+      //save person
+      person.save().then(function(person) {
+
+        data = {
+          person_id: person.dataValues.person_id,
+          first_name: person.dataValues.first_name,
+          last_name: person.dataValues.last_name,
+          title: person.dataValues.title,
+          email: person.dataValues.email,
+          freelancer: person.dataValues.freelancer,
+          user_rating: person.dataValues.user_rating
+        }
+
+        res.json({
+          person: data
+        });
+      });
+    }).catch(function(err) {
+    return next(err);
+    }
+  );
+}

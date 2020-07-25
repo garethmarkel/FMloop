@@ -9,7 +9,6 @@ import {Helmet} from 'react-helmet';
 import React from "react";
 import '../../css/App.css';
 import { Link } from 'react-router-dom';
-import ExteriorPage from '../templates/ExteriorPage.js';
 /*
 This class represents the very first page that unauthenticated users see.
 Includes things like FAQ, website logo, example projects, and other

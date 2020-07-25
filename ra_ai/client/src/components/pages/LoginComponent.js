@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect } from 'react-router-dom';
 import AppContext from '../../libs/AppContext.js';
-import ExteriorPage from '../templates/ExteriorPage.js';
 import {Helmet} from 'react-helmet';
 /*
 This class represents the login page.

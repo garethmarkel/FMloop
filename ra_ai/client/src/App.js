@@ -16,6 +16,9 @@ import DashboardComponent from './components/pages/DashboardComponent';
 import EditAccountComponent from './components/pages/EditAccountComponent';
 import CreateProjectComponent from './components/pages/CreateProjectComponent';
 import ProjectComponent from './components/pages/ProjectComponent';
+import FreelancerRegistrationComponent from './components/pages/FreelancerRegistrationComponent';
+import AvailableProjectsListComponent from './components/pages/AvailableProjectsListComponent';
+import PickBidComponent from './components/pages/PickBidComponent';
 // class DebugRouter extends BrowserRouter {
 //   constructor(props){
 //     super(props);
@@ -81,7 +84,10 @@ class App extends React.Component {
                 <Route path="/create-account" component={CreateAccountComponent} />
                 <Route path="/edit-account" component={EditAccountComponent} />
                 <Route path="/create-project" component={CreateProjectComponent} />
+                <Route path="/project-list" component={AvailableProjectsListComponent} />
+                <Route path="/freelancer-registration" component={FreelancerRegistrationComponent} />
                 <Route path="/project:project_id" component={ProjectComponent} />
+                <Route path="/bids/:project_id/:contractor_id/:owner_id" component={PickBidComponent} />
                 <Redirect from="*" to="/" />
               </Switch>
             </div>
