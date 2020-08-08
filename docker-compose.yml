@@ -7,27 +7,27 @@ x-common-variables: &common-variables
 
 services:
   mysql:
-    image: mysql:5.7
-    environment:
-      <<: *common-variables
-      MYSQL_HOST: localhost
-      MYSQL_ROOT_PASSWORD: MYSQL_PASSWORD
-    ports:
-      - 13306:3306
-    restart: unless-stopped
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./sql/freelance_ai_schema.sql:/docker-entrypoint-initdb.d/freelance_ai_schema.sql
-  phpmyadmin:
-    depends_on:
-      - mysql
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: mysql
-    links:
-      - mysql:mysql
-    ports:
-      - 8080:80
+      - ./sql:/docker-entrypoint-initdb.d
     restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=freelance_ai
+    ports:
+      - "13306:3306"
+  # phpmyadmin:
+  #   depends_on:
+  #     - mysql
+  #   image: phpmyadmin/phpmyadmin
+  #   environment:
+  #     PMA_HOST: mysql
+  #   links:
+  #     - mysql:mysql
+  #   ports:
+  #     - 8080:80
+  #   restart: always
   server:
     build: ./ra_ai
     depends_on:
