@@ -7,7 +7,7 @@ CREATE TABLE person
 	person_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    title VARCHAR(30) NULL,
+    title VARCHAR(50) NULL,
     email VARCHAR(30) NOT NULL UNIQUE,
     passphrase VARCHAR(20) NOT NULL,
     user_rating DECIMAL(2, 1) NULL,
