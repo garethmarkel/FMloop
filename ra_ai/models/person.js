@@ -1,5 +1,5 @@
 //define person model for users
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
 
 var ThreadParticipant = require('./thread_participant.js');

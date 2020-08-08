@@ -1,4 +1,4 @@
-var Sequelize = require("Sequelize");
+var Sequelize = require("sequelize");
 var sequelize = require('../objects/sequelize.js');
 
 var Person = require('./person.js');

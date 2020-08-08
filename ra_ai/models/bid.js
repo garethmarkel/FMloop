@@ -3,7 +3,7 @@ This model represents a temporary bid that a freelancer submits to a project
 in order to get approval to being working on said project.
 */
 
-var Sequelize = require('Sequelize');
+var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
 var Person = require('./person.js');
 var Project = require('./project.js');

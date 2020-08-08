@@ -5,7 +5,7 @@ be able to bid on and complete projects to the satisfaction of the
 project owner.
 */
 
-var Sequelize = require("Sequelize");
+var Sequelize = require("sequelize");
 var sequelize = require('../objects/sequelize.js');
 
 var Person = require('./person.js');
