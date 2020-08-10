@@ -8,7 +8,6 @@ x-common-variables: &common-variables
 services:
   mysql:
     image: mysql:8.0
-    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     restart: always
@@ -16,7 +15,9 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=freelance_ai
     ports:
-      - "13306:3306"
+      - 3306:3306
+    expose:
+      - 3306
   # phpmyadmin:
   #   depends_on:
   #     - mysql

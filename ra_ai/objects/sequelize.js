@@ -6,7 +6,7 @@ var Sequelize = require('sequelize');
 
 var sequelize = new Sequelize('freelance_ai', 'root', 'password',
 {
-  host: 'localhost',
+  host: 'mysql',
   port: '3306',
   dialect: 'mysql',
   pool:

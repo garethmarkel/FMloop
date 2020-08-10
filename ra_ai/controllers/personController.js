@@ -68,6 +68,7 @@ exports.createAccount = function(req, res)
   }).then(function (person) {
     res.status(200).send('Good job!');
   }).catch(function (err) {
+    console.log(err);
     if(err.errors[0].type == 'Validation error'){
       res.status(422).send('User already exists!');
     } else {
