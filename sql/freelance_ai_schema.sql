@@ -11,7 +11,8 @@ CREATE TABLE person
     email VARCHAR(30) NOT NULL UNIQUE,
     passphrase VARCHAR(20) NOT NULL,
     user_rating DECIMAL(2, 1) NULL,
-    freelancer BOOLEAN DEFAULT false
+    freelancer BOOLEAN DEFAULT false,
+    zipcode MEDIUMINT
 ) ENGINE=InnoDB AUTO_INCREMENT = 1001;
 
 CREATE TABLE project
@@ -25,6 +26,7 @@ CREATE TABLE project
     completion_date DATETIME NULL,
     owner_id INTEGER NOT NULL,
 	contracted BOOLEAN DEFAULT false,
+    project_phase VARCHAR(20) NOT NULL,
     FOREIGN KEY (owner_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB AUTO_INCREMENT = 2001;
@@ -109,6 +111,7 @@ CREATE TABLE has_skill
 (
 	skill_id INTEGER,
     person_id INTEGER,
+    skill_level TINYINT,
     PRIMARY KEY(skill_id, person_id),
     FOREIGN KEY (person_id) REFERENCES person (person_id)
 		ON UPDATE RESTRICT ON DELETE RESTRICT,
