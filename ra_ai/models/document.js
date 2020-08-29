@@ -7,7 +7,7 @@ var Document = sequelize.define('document', {
   document_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
-    allowNull: true,
+    allowNull: false,
     autoIncrement: true
   },
   doc_name: {

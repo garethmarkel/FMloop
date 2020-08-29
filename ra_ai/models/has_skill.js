@@ -26,6 +26,9 @@ var HasSkill = sequelize.define('has_skill', {
     },
     primaryKey: true
   },
+  skill_level: {
+    type: Sequelize.INTEGER
+  }
 }, {
   freezeTableName: true,
   tableName: 'has_skill',
