@@ -68,8 +68,8 @@ CREATE TABLE bid (
 
 CREATE TABLE client_questionnaire (
     client_questionnaire_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    performance_rating DECIMAL(2 , 1 ) NULL,
-    comments TEXT,
+    performance_rating DECIMAL(2 , 1 ) NOT NULL,
+    comments TEXT NULL,
     bid_id INTEGER,
     FOREIGN KEY (bid_id)
         REFERENCES bid (bid_id)
@@ -78,8 +78,8 @@ CREATE TABLE client_questionnaire (
 
 CREATE TABLE freelancer_questionnaire (
 	freelancer_questionnaire_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    client_rating DECIMAL(2 , 1 ) NULL,
-    comments TEXT,
+    client_rating DECIMAL(2 , 1 ) NOT NULL,
+    comments TEXT NULL,
     bid_id INTEGER,
     FOREIGN KEY (bid_id)
         REFERENCES bid (bid_id)
