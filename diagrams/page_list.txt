@@ -1,0 +1,12 @@
+Home:
+  Basically already exists, UI people make pretty?
+
+Login:
+  Login
+
+Create Account Base Oage:
+  create account process (firstname, lastname, freelancer)
+
+Freelancer Questionaire page:
+  skills--level?
+  availability?
