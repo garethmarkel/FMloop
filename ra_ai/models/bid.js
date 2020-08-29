@@ -5,16 +5,23 @@ in order to get approval to being working on said project.
 
 var Sequelize = require('sequelize');
 var sequelize = require('../objects/sequelize.js');
-var Person = require('./person.js');
+var Freelancer = require('./freelancer.js');
 var Project = require('./project.js');
 
 var Bid = sequelize.define('bid', {
   /*
   The primary key.
   */
-  project_id: {
+  bid_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
+    autoIncrement: true
+  },
+  /*
+  The project_id.
+  */
+  project_id: {
+    type: Sequelize.INTEGER,
     references: {
       model: Project,
       key: 'project_id',
@@ -29,7 +36,7 @@ var Bid = sequelize.define('bid', {
     type: Sequelize.INTEGER,
     primaryKey: true,
     references: {
-      model: Person,
+      model: Freelancer,
       key: 'person_id',
       onUpdate: 'restrict',
       onDelete: 'restrict'

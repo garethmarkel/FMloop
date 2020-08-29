@@ -90,7 +90,14 @@ var Project = sequelize.define("project", {
   contracted: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  }
+  },
+  /*
+  phase the project is at at time of assignment
+  */
+  project_phase: {
+    type: Sequelize.STRING(20),
+    allowNull: false
+  },
 },{
   freezeTableName: true,
   tableName: 'project',
