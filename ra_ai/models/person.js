@@ -36,8 +36,7 @@ var Person = sequelize.define('person', {
   },
   title: {
     type: Sequelize.STRING(30),
-    allowNull: true,
-    default: null
+    allowNull: true
   },
   email: {
     type: Sequelize.STRING(30),
@@ -64,7 +63,6 @@ var Person = sequelize.define('person', {
   },
   freelancer: {
     type: Sequelize.BOOLEAN,
-    allowNull: true,
     default: false
   },
   user_rating: {
@@ -72,6 +70,10 @@ var Person = sequelize.define('person', {
     allowNull: true,
     default: null
   },
+  zipcode: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  }
 },{
   freezeTableName: true,
   tableName: 'person',
