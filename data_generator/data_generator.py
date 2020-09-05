@@ -12,13 +12,16 @@ def pop_person(file, data_gen, amount):
         user_rating = random.uniform(1, 5)
         first_name = data_gen.first_name()
         last_name = data_gen.last_name()
-        email = data_gen.email()
+        email = first_name + "." + last_name + "@gmail.com"
+        email = email.lower()
         title = data_gen.job()
         password = data_gen.word()
         zipcode = data_gen.postcode()
 
-        person = Person(is_freelancer, user_rating, first_name, last_name,
-            email, title, password, zipcode)
+        person = Person(first_name, last_name, email, title, password,
+            user_rating, is_freelancer, zipcode)
+        #person.show_info()
+        person_array.append(person)
 
         add_person = ("insert into person "
             "(first_name, last_name, email, title, passphrase, user_rating, freelancer, zipcode) "
@@ -29,7 +32,7 @@ def pop_person(file, data_gen, amount):
         #print(add_person)
         file.write(add_person)
 
-    return None
+    return person_array
 
 def pop_project(cursor, data_gen):
     get_person = ("SELECT person_id FROM person")
@@ -58,6 +61,7 @@ def main():
     Faker.seed(0)
 
     person_array = pop_person(test_data_file, data_gen, 10)
+    #person_array[0].show_info()
     #pop_project(cursor, data_gen)
 
     test_data_file.close()

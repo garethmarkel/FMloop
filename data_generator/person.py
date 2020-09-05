@@ -10,7 +10,9 @@ class Person:
         self.freelancer = freelancer
         self.zipcode = zipcode
 
-    def show_info():
-        info = "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}"
+    def show_info(self):
+        info = "{0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}"
+        info = info.format(self.first_name, self.last_name, self.email, self.title,
+            self.passphrase, self.user_rating, self.freelancer, self.zipcode)
 
-        return info
+        print(info)
