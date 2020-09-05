@@ -6,8 +6,10 @@ from person import Person
 
 def pop_person(file, data_gen, amount):
     person_array = []
+    person_id = 1000
 
     for x in range(0, amount):
+        person_id += 1
         is_freelancer = bool(random.getrandbits(1))
         user_rating = random.uniform(1, 5)
         first_name = data_gen.first_name()
@@ -18,9 +20,9 @@ def pop_person(file, data_gen, amount):
         password = data_gen.word()
         zipcode = data_gen.postcode()
 
-        person = Person(first_name, last_name, email, title, password,
+        person = Person(person_id, first_name, last_name, email, title, password,
             user_rating, is_freelancer, zipcode)
-        #person.show_info()
+        person.show_info()
         person_array.append(person)
 
         add_person = ("insert into person "
