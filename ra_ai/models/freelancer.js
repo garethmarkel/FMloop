@@ -29,6 +29,13 @@ var Freelancer = sequelize.define('freelancer', {
   //how long they've been freealncing
   freelancing_years: {
     type: Sequelize.INTEGER
+  },
+  //denotes the overall rating that the freelancer has received from
+  //past project reviews
+  freelancer_rating: {
+    type: Sequelize.DECIMAL(2,1),
+    allowNull: true,
+    default: null
   }
 }, {
   freezeTableName: true,

@@ -18,6 +18,7 @@ CREATE TABLE freelancer (
     person_id INTEGER PRIMARY KEY,
     hours_available TINYINT,
     freelancing_years TINYINT,
+    freelancer_rating DECIMAL(2 , 1 ) NULL,
     FOREIGN KEY (person_id)
         REFERENCES person (person_id)
         ON UPDATE RESTRICT ON DELETE RESTRICT
