@@ -92,6 +92,13 @@ var Project = sequelize.define("project", {
     defaultValue: false
   },
   /*
+  Denotes whether the project has been paid for.
+  */
+  paid: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  /*
   phase the project is at at time of assignment
   */
   project_phase: {

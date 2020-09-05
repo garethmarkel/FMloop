@@ -2,10 +2,16 @@ Home:
   Basically already exists, UI people make pretty?
 
 Login:
-  Login
+  Logging in will involve typing in your email and password.
+  If either supplied credentials is incorrect or non-existent, page will return the standard incorrect credentials error message.
 
-Create Account Base Oage:
-  create account process (firstname, lastname, freelancer)
+Create Account:
+  Create account process will involve typing in the following data points: (firstname, lastname, email, password, confirm password, zip code, and are you a freelancer)
+  Errors:
+	If email is already used.
+	If passwords don't match.
+	If any of the fields aren't filled out.
+
 
 Freelancer Questionaire page:
   skills--level?

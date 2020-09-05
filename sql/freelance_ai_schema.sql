@@ -33,6 +33,7 @@ CREATE TABLE project (
     completion_date DATETIME NULL,
     owner_id INTEGER NOT NULL,
     contracted BOOLEAN DEFAULT FALSE,
+    paid BOOLEAN DEFAULT FALSE,
     project_phase VARCHAR(20) NOT NULL,
     FOREIGN KEY (owner_id)
         REFERENCES person (person_id)
