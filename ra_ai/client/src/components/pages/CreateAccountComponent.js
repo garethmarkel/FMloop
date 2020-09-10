@@ -2,6 +2,21 @@ import React from "react";
 import { Redirect } from 'react-router-dom';
 import AppContext from '../../libs/AppContext.js';
 import {Helmet} from 'react-helmet';
+
+/*
+check if freelancer
+check for zip code
+if freelancer rediirect to questionaire
+  else redirect to login
+
+look at threadcomponent and projectcomponent to put skills questionaire in
+each itme in map has 2 boxes with dropdown and skills
+need route to input skills
+
+need to store values from skills sliders somewhere
+*/
+
+
 /*
 This is the web page where users will get to create their account.
 */
@@ -19,6 +34,11 @@ class CreateAccountComponent extends React.Component {
       passphrase:'',
       confirm_passphrase: '',
       result: '',
+      zip: '',
+      is_freelancer: false,
+      python_skill: 0,
+      javaScript_skill: 0,
+      node_skill: 0,
       redirect: null
     };
 
@@ -27,6 +47,11 @@ class CreateAccountComponent extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePassphraseChange = this.handlePassphraseChange.bind(this);
     this.handleConfirmPassphraseChange = this.handleConfirmPassphraseChange.bind(this);
+    this.handleZipCodeChange = this.handleZipCodeChange.bind(this);
+    this.handleIsFreelancerChange = this.handleIsFreelancerChange.bind(this);
+    this.handlePythonSliderChange = this.handlePythonSliderChange.bind(this);
+    this.handleJavaScriptSliderChange = this.handleJavaScriptSliderChange.bind(this);
+    this.handleNodeSliderChange = this.handleNodeSliderChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
@@ -51,6 +76,73 @@ class CreateAccountComponent extends React.Component {
   handleConfirmPassphraseChange(event) {
     this.setState({confirm_passphrase: event.target.value});
   }
+
+  // handle zip code field
+  handleZipCodeChange(event) {
+    this.setState({zip: event.target.value});
+  }
+
+  // if the box is ticked we update our freelancer value, target.checked should be a bool I hope
+  handleIsFreelancerChange(event) {
+      this.setState({is_freelancer: target.checked});
+  }
+
+  // handle python slider
+  handlePythonSliderChange(event) {
+    this.setState({python_skill: event.target.value});
+  }
+
+  // handle js slider for skills questionaire
+  handleJavaScriptSliderChange(event) {
+    this.setState({javaScript_skill: event.target.value});
+  }
+
+  // handle node slider for skills questionaire
+  handleNodeSliderChange(event) {
+    this.setState({node_skill: event.target.value});
+  }
+
+  // display the freelancer questionaire
+  displayQuestionaire() {
+    if(this.state.is_freelancer) {
+      return (
+        <form>
+          <label>Rate your skill with Python</label>
+          <input
+            id="typeinp"
+            type="range"
+            min="0" max="10"
+            value={this.state.python_skill}
+            onChange={this.handlePythonSliderChange}
+            step="1"/>
+          />
+          <br />
+          <label>Rate your skill with JavaScript</label>
+          <input
+            id="typeinp"
+            type="range"
+            min="0" max="10"
+            value={this.state.javaScript_skill}
+            onChange={this.handleJavaScriptSliderChange}
+            step="1"/>
+          />
+          <br />
+          <label>Rate your skill with Node.js</label>
+          <input
+            id="typeinp"
+            type="range"
+            min="0" max="10"
+            value={this.state.node_skill}
+            onChange={this.handleNodeSliderChange}
+            step="1"/>
+          <br />
+        </form>);
+    }
+
+    return <br />;
+  }
+
+
   //handle submit button
   handleSubmit(event) {
     //prevent page from undoing redirect
@@ -153,6 +245,11 @@ class CreateAccountComponent extends React.Component {
               <br />
               <label>Confirm Password</label>
               <input type="passphrase" name="confirm_password" onChange={this.handleConfirmPassphraseChange} />
+              <br />
+              <label>Are You a Freelancer?</label>
+              <input type="checkbox" name="is_freelancer" onChange={this.handleIsFreelancerChange} />
+              <br />
+              { this.displayQuestionaire() }
               <br />
               <br />
               <input type='submit' value='Submit' />
